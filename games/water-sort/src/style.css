@@ -1,0 +1,26 @@
+:root {
+  background: #09141d;
+  color-scheme: dark;
+  font-family: Inter, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+html, body { width: 100%; height: 100%; min-height: 100dvh; margin: 0; overflow: hidden; }
+body {
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  background: #09141d;
+  overscroll-behavior: none;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+#game-root { position: relative; width: 100%; height: 100%; min-width: 0; min-height: 0; overflow: hidden; }
+#game-root canvas {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  outline: none;
+  image-rendering: auto;
+}

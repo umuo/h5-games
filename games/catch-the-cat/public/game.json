@@ -4,9 +4,10 @@
   "shortTitle": "CAT",
   "description": "点击圆点设置路障，在小猫逃到边缘前围住它。",
   "category": "益智",
+  "icon": "cat",
   "engine": "phaser",
   "orientation": "portrait",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "path": "/games/catch-the-cat/",
   "enabled": true
 }

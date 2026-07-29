@@ -6,6 +6,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..")
 const clientRoot = path.join(root, "dist/client");
 const serverRoot = path.join(root, "dist/server");
 const outputRoot = path.join(root, ".wrangler/pages");
+const siteAssetsDirectory = "site-assets";
 
 await readFile(path.join(serverRoot, "index.js"), "utf8");
 await rm(outputRoot, { recursive: true, force: true });
@@ -18,7 +19,11 @@ await cp(
   { force: true },
 );
 await cp(path.join(serverRoot, "ssr"), path.join(outputRoot, "ssr"), { recursive: true, force: true });
-await cp(path.join(serverRoot, "assets"), path.join(outputRoot, "assets"), { recursive: true, force: true });
+await cp(
+  path.join(serverRoot, siteAssetsDirectory),
+  path.join(outputRoot, siteAssetsDirectory),
+  { recursive: true, force: true },
+);
 
 for (const file of ["image-config.json", "vinext-externals.json", "vinext-server.json"]) {
   await cp(path.join(serverRoot, file), path.join(outputRoot, file), { force: true });
@@ -39,9 +44,9 @@ const pagesWorker = `import app from "./index.js";
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
-    if ((request.method === "GET" || request.method === "HEAD") && url.pathname.startsWith("/games/")) {
+    if (request.method === "GET" || request.method === "HEAD") {
       const segments = url.pathname.split("/").filter(Boolean);
-      const isGameDocument = segments.length === 2;
+      const isGameDocument = segments.length === 2 && segments[0] === "games";
       if (isGameDocument) url.pathname = \`/games/\${segments[1]}/__entry.game\`;
       const assetResponse = await env.ASSETS.fetch(new Request(url, request));
       if (assetResponse.status !== 404) {

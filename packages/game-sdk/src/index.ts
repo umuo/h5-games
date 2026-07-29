@@ -59,3 +59,55 @@ export function createGameStorage<T>(gameId: string, defaults: T) {
     },
   };
 }
+
+interface CameraLike {
+  setZoom(value: number): CameraLike;
+  setScroll(x: number, y: number): unknown;
+}
+
+interface DisplayListLike {
+  list: unknown[];
+}
+
+interface ResolutionAware {
+  setResolution?: (value: number) => unknown;
+  list?: unknown[];
+}
+
+export function getGameRenderDpr(maxDpr = 2) {
+  if (typeof window === "undefined") return 1;
+  const deviceDpr = Number.isFinite(window.devicePixelRatio) ? window.devicePixelRatio : 1;
+  return Math.max(1, Math.min(deviceDpr, maxDpr));
+}
+
+export function configureHiDpiCamera(
+  camera: CameraLike,
+  logicalWidth: number,
+  logicalHeight: number,
+  renderDpr = getGameRenderDpr(),
+) {
+  camera
+    .setZoom(renderDpr)
+    .setScroll(
+      -logicalWidth * (renderDpr - 1) / 2,
+      -logicalHeight * (renderDpr - 1) / 2,
+    );
+}
+
+export function sharpenSceneText(
+  displayList: DisplayListLike,
+  renderDpr = getGameRenderDpr(),
+) {
+  const pending = [...displayList.list];
+  const visited = new Set<unknown>();
+
+  while (pending.length > 0) {
+    const child = pending.pop();
+    if (!child || typeof child !== "object" || visited.has(child)) continue;
+    visited.add(child);
+
+    const resolutionAware = child as ResolutionAware;
+    resolutionAware.setResolution?.(renderDpr);
+    if (Array.isArray(resolutionAware.list)) pending.push(...resolutionAware.list);
+  }
+}

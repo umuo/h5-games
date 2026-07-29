@@ -77,12 +77,14 @@ export function GameLibrary({ games }: { games: GameCatalogItem[] }) {
 
       {visibleGames.length > 0 ? (
         <ol className="game-list">
-          {visibleGames.map((game, index) => (
+          {visibleGames.map((game) => (
             <li key={game.id}>
               <a className="game-row" href={game.path} aria-label={`开始${game.title}`}>
-                <span className={`game-icon icon-tone-${(index % 4) + 1}`} aria-hidden="true">
-                  <i className="game-icon-orbit" />
-                  <b>{game.shortTitle.slice(0, 1)}</b>
+                <span className={`game-icon game-icon-${game.icon}`} aria-hidden="true">
+                  <i className="icon-shape icon-shape-one" />
+                  <i className="icon-shape icon-shape-two" />
+                  <i className="icon-shape icon-shape-three" />
+                  {game.icon === "arcade" ? <b className="icon-symbol">{game.shortTitle.slice(0, 1)}</b> : null}
                 </span>
                 <span className="game-row-copy">
                   <strong>{game.title}</strong>

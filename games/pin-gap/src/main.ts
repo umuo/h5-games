@@ -1,9 +1,16 @@
 import Phaser from "phaser";
-import { createGameBridge, createGameStorage } from "@web-games/game-sdk";
+import {
+  configureHiDpiCamera,
+  createGameBridge,
+  createGameStorage,
+  getGameRenderDpr,
+  sharpenSceneText,
+} from "@web-games/game-sdk";
 import "./style.css";
 
 const WIDTH = 390;
 const HEIGHT = 844;
+const RENDER_DPR = getGameRenderDpr();
 const CENTER_X = WIDTH / 2;
 const CENTER_Y = 322;
 const CORE_RADIUS = 70;
@@ -17,6 +24,7 @@ class PinGapScene extends Phaser.Scene {
   private scoreText!: Phaser.GameObjects.Text;
   private remainingText!: Phaser.GameObjects.Text;
   private hintText!: Phaser.GameObjects.Text;
+  private motionText!: Phaser.GameObjects.Text;
   private shooter?: Phaser.GameObjects.Container;
   private localAngles: number[] = [];
   private level = 1;
@@ -26,12 +34,15 @@ class PinGapScene extends Phaser.Scene {
   private shooting = false;
   private ended = false;
   private changingLevel = false;
-  private bridge = createGameBridge({ gameId: "pin-gap", version: "1.0.0" });
+  private started = false;
+  private bridge = createGameBridge({ gameId: "pin-gap", version: "1.2.0" });
   private storage = createGameStorage("pin-gap", { highLevel: 1, highScore: 0 });
 
   constructor() { super("pin-gap"); }
 
   create() {
+    this.resetRun();
+    configureHiDpiCamera(this.cameras.main, WIDTH, HEIGHT, RENDER_DPR);
     this.cameras.main.setBackgroundColor("#f3f0e8");
     this.add.grid(WIDTH / 2, HEIGHT / 2, WIDTH, HEIGHT, 39, 39, 0xf3f0e8, 1, 0x101114, .07);
     this.add.rectangle(WIDTH / 2, 31, WIDTH - 36, 1, 0x101114, .25);
@@ -59,6 +70,9 @@ class PinGapScene extends Phaser.Scene {
     this.add.text(CENTER_X, CENTER_Y + 29, "LEVEL", {
       fontFamily: "monospace", fontSize: "8px", color: "#dfff3f", letterSpacing: 2,
     }).setOrigin(.5);
+    this.motionText = this.add.text(CENTER_X, CENTER_Y + 47, "", {
+      fontFamily: "monospace", fontSize: "8px", color: "#8f918a", letterSpacing: 1,
+    }).setOrigin(.5);
 
     this.remainingText = this.add.text(CENTER_X, 585, "", {
       fontFamily: "monospace", fontSize: "11px", color: "#74726c", letterSpacing: 2,
@@ -71,10 +85,21 @@ class PinGapScene extends Phaser.Scene {
     }).setOrigin(.5);
     this.queueGraphics = this.add.graphics();
 
-    this.input.on("pointerup", () => this.handleTap());
-    this.game.events.on(Phaser.Core.Events.BLUR, () => this.scene.pause());
-    this.game.events.on(Phaser.Core.Events.FOCUS, () => { if (!this.ended) this.scene.resume(); });
+    const handlePointer = () => this.handleTap();
+    const pauseGame = () => this.scene.pause();
+    const resumeGame = () => {
+      if (!this.ended) this.scene.resume();
+    };
+    this.input.on("pointerup", handlePointer);
+    this.game.events.on(Phaser.Core.Events.BLUR, pauseGame);
+    this.game.events.on(Phaser.Core.Events.FOCUS, resumeGame);
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+      this.input.off("pointerup", handlePointer);
+      this.game.events.off(Phaser.Core.Events.BLUR, pauseGame);
+      this.game.events.off(Phaser.Core.Events.FOCUS, resumeGame);
+    });
     this.startLevel();
+    sharpenSceneText(this.children, RENDER_DPR);
     this.bridge.ready();
   }
 
@@ -82,6 +107,18 @@ class PinGapScene extends Phaser.Scene {
     if (!this.ended && this.pinLayer) {
       this.pinLayer.rotation += this.spinSpeed * delta / 1000;
     }
+  }
+
+  private resetRun() {
+    this.level = 1;
+    this.score = 0;
+    this.remaining = 0;
+    this.spinSpeed = .9;
+    this.shooting = false;
+    this.ended = false;
+    this.changingLevel = false;
+    this.started = false;
+    this.shooter = undefined;
   }
 
   private startLevel() {
@@ -94,6 +131,7 @@ class PinGapScene extends Phaser.Scene {
     this.pinLayer = this.add.container(CENTER_X, CENTER_Y);
     this.levelText.setText(String(this.level).padStart(2, "0"));
     this.spinSpeed = (0.82 + Math.min(this.level * .11, 1.1)) * (this.level % 3 === 0 ? -1 : 1);
+    this.motionText.setText(`${this.spinSpeed > 0 ? "顺时针" : "逆时针"} · ${Math.abs(this.spinSpeed).toFixed(1)}×`);
     this.remaining = Math.min(6 + this.level, 14);
 
     const startingPins = Math.min(3 + Math.floor(this.level / 2), 8);
@@ -107,15 +145,15 @@ class PinGapScene extends Phaser.Scene {
     this.hintText.setText("点击屏幕发射").setColor("#101114");
     this.updateQueue();
     this.prepareShooter();
-    if (this.level === 1 && this.score === 0) this.bridge.started();
   }
 
   private handleTap() {
-    if (this.ended) {
-      this.scene.restart();
-      return;
-    }
+    if (this.ended) return;
     if (this.shooting || this.changingLevel || this.remaining <= 0 || !this.shooter) return;
+    if (!this.started) {
+      this.started = true;
+      this.bridge.started();
+    }
     this.shooting = true;
     this.hintText.setText("看准空隙…");
     this.tweens.add({
@@ -219,16 +257,55 @@ class PinGapScene extends Phaser.Scene {
     const bestText = this.children.getByName("best-score") as Phaser.GameObjects.Text | null;
     bestText?.setText(`BEST  ${String(highScore).padStart(4, "0")}`);
     this.bridge.gameOver(this.score);
+    this.showResult(highScore);
+  }
+
+  private showResult(highScore: number) {
+    const shade = this.add.rectangle(WIDTH / 2, HEIGHT / 2, WIDTH, HEIGHT, 0x101114, .48)
+      .setDepth(100);
+    const panel = this.add.rectangle(WIDTH / 2, 650, 308, 178, 0xf3f0e8)
+      .setStrokeStyle(2, 0x101114)
+      .setDepth(101);
+    const badge = this.add.circle(WIDTH / 2, 594, 22, 0xff6a51)
+      .setStrokeStyle(2, 0x101114)
+      .setDepth(102);
+    this.add.text(WIDTH / 2, 594, "×", {
+      fontFamily: "sans-serif", fontSize: "24px", color: "#101114", fontStyle: "bold",
+    }).setOrigin(.5).setDepth(103);
+    this.add.text(WIDTH / 2, 628, "撞针了", {
+      fontFamily: "sans-serif", fontSize: "24px", color: "#101114", fontStyle: "bold",
+    }).setOrigin(.5).setDepth(102);
+    this.add.text(WIDTH / 2, 660, `LEVEL ${this.level}  ·  ${this.score} 分  ·  BEST ${highScore}`, {
+      fontFamily: "monospace", fontSize: "10px", color: "#777872", letterSpacing: 1,
+    }).setOrigin(.5).setDepth(102);
+    const replay = this.add.rectangle(WIDTH / 2, 706, 184, 42, 0x101114)
+      .setInteractive({ useHandCursor: true })
+      .setDepth(102);
+    this.add.text(WIDTH / 2, 706, "重新挑战  ↻", {
+      fontFamily: "sans-serif", fontSize: "13px", color: "#f3f0e8", fontStyle: "bold",
+    }).setOrigin(.5).setDepth(103);
+    replay.on("pointerup", () => this.scene.restart());
+    sharpenSceneText(this.children, RENDER_DPR);
+    this.tweens.add({
+      targets: [shade, panel, badge, replay],
+      alpha: { from: 0, to: 1 },
+      duration: 180,
+    });
   }
 }
 
 new Phaser.Game({
   type: Phaser.AUTO,
   parent: "game-root",
-  width: WIDTH,
-  height: HEIGHT,
+  width: WIDTH * RENDER_DPR,
+  height: HEIGHT * RENDER_DPR,
   backgroundColor: "#f3f0e8",
-  render: { antialias: true, roundPixels: true },
-  scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH, width: WIDTH, height: HEIGHT },
+  render: { antialias: true, pixelArt: false, roundPixels: false },
+  scale: {
+    mode: Phaser.Scale.FIT,
+    autoCenter: Phaser.Scale.CENTER_BOTH,
+    width: WIDTH * RENDER_DPR,
+    height: HEIGHT * RENDER_DPR,
+  },
   scene: PinGapScene,
 });

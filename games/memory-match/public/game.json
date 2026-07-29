@@ -1,0 +1,13 @@
+{
+  "id": "memory-match",
+  "title": "记忆翻牌",
+  "shortTitle": "MEM",
+  "description": "翻开卡片记住位置，用更少的步数找出全部配对。",
+  "category": "益智",
+  "icon": "memory",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.2.0",
+  "path": "/games/memory-match/",
+  "enabled": true
+}

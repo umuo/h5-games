@@ -3,7 +3,7 @@ import { GameLibrary } from "./GameLibrary";
 
 export default function Home() {
   return (
-    <main>
+    <main className="portal-page">
       <header className="site-header">
         <a className="brand" href="#games" aria-label="游点意思游戏列表">
           <span className="brand-mark" aria-hidden="true">

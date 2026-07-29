@@ -1,0 +1,13 @@
+{
+  "id": "water-sort",
+  "title": "水排序",
+  "shortTitle": "SORT",
+  "description": "点击试管倾倒液体，把每种颜色分别整理到一起。",
+  "category": "益智",
+  "icon": "water",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.1.1",
+  "path": "/games/water-sort/",
+  "enabled": true
+}

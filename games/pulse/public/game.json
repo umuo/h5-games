@@ -4,9 +4,10 @@
   "shortTitle": "PULSE",
   "description": "在光环重合的一刻按下屏幕。",
   "category": "反应力",
+  "icon": "pulse",
   "engine": "phaser",
   "orientation": "portrait",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "path": "/games/pulse/",
   "enabled": true
 }

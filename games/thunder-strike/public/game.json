@@ -1,0 +1,13 @@
+{
+  "id": "thunder-strike",
+  "title": "雷电射击",
+  "shortTitle": "雷电",
+  "description": "拖动战机闪避弹幕，自动开火击破敌机编队。",
+  "category": "动作",
+  "icon": "shooter",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.1.0",
+  "path": "/games/thunder-strike/",
+  "enabled": true
+}

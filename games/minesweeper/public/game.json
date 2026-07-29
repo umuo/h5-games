@@ -1,0 +1,13 @@
+{
+  "id": "minesweeper",
+  "title": "扫雷",
+  "shortTitle": "MINE",
+  "description": "选择难度排查地雷，短按翻开、长按插旗。",
+  "category": "益智",
+  "icon": "mine",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.2.0",
+  "path": "/games/minesweeper/",
+  "enabled": true
+}

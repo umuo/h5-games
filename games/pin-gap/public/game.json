@@ -4,9 +4,10 @@
   "shortTitle": "PIN",
   "description": "看准空隙，把所有针安全插进旋转圆盘。",
   "category": "休闲",
+  "icon": "pin",
   "engine": "phaser",
   "orientation": "portrait",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "path": "/games/pin-gap/",
   "enabled": true
 }

@@ -1,9 +1,16 @@
 import Phaser from "phaser";
-import { createGameBridge, createGameStorage } from "@web-games/game-sdk";
+import {
+  configureHiDpiCamera,
+  createGameBridge,
+  createGameStorage,
+  getGameRenderDpr,
+  sharpenSceneText,
+} from "@web-games/game-sdk";
 import "./style.css";
 
 const WIDTH = 390;
 const HEIGHT = 844;
+const RENDER_DPR = getGameRenderDpr();
 const COLS = 9;
 const ROWS = 9;
 const CELL_RADIUS = 14;
@@ -46,7 +53,7 @@ class CatchTheCatScene extends Phaser.Scene {
   private storage = createGameStorage("catch-the-cat", { bestMoves: 0, wins: 0 });
   private bridge = createGameBridge({
     gameId: "catch-the-cat",
-    version: "1.0.0",
+    version: "1.2.0",
     onCommand: (event) => {
       if (event.type === "PAUSE") this.scene.pause();
       if (event.type === "RESUME" && !this.ended) this.scene.resume();
@@ -58,6 +65,10 @@ class CatchTheCatScene extends Phaser.Scene {
     super("catch-the-cat");
   }
 
+  preload() {
+    this.load.image("cat-mascot", "assets/cat-mascot.png");
+  }
+
   create() {
     this.moves = 0;
     this.locked = false;
@@ -66,6 +77,7 @@ class CatchTheCatScene extends Phaser.Scene {
     this.catCell = { col: 4, row: 4 };
     this.circles = [];
     this.endLayer = undefined;
+    configureHiDpiCamera(this.cameras.main, WIDTH, HEIGHT, RENDER_DPR);
     this.cameras.main.setBackgroundColor(COLORS.paper);
 
     this.drawInterface();
@@ -75,6 +87,7 @@ class CatchTheCatScene extends Phaser.Scene {
     const start = this.getCellPosition(this.catCell);
     this.cat.setPosition(start.x, start.y);
     this.refreshStats();
+    sharpenSceneText(this.children, RENDER_DPR);
 
     const pauseGame = () => this.scene.pause();
     const resumeGame = () => {
@@ -198,13 +211,26 @@ class CatchTheCatScene extends Phaser.Scene {
       }
     }
 
+    let foundPlayableLayout = false;
     for (let attempt = 0; attempt < 60; attempt += 1) {
       this.walls.clear();
       const shuffled = Phaser.Utils.Array.Shuffle([...candidates]);
       shuffled.slice(0, INITIAL_WALLS).forEach((cell) => this.walls.add(cellKey(cell)));
       const reachable = this.createDistanceMap().has(cellKey(this.catCell));
       const openNeighbors = this.getNeighbors(this.catCell).filter((cell) => !this.walls.has(cellKey(cell))).length;
-      if (reachable && openNeighbors >= 3) break;
+      if (reachable && openNeighbors >= 3) {
+        foundPlayableLayout = true;
+        break;
+      }
+    }
+
+    if (!foundPlayableLayout) {
+      this.walls = new Set([
+        "1:1", "7:1",
+        "2:3", "6:3",
+        "2:5", "6:5",
+        "1:7", "7:7",
+      ]);
     }
 
     for (let row = 0; row < ROWS; row += 1) {
@@ -220,6 +246,12 @@ class CatchTheCatScene extends Phaser.Scene {
     this.walls.add(key);
     this.moves += 1;
     this.refreshCell(cell);
+    this.tweens.add({
+      targets: this.circles[cell.row][cell.col],
+      scale: { from: .72, to: 1 },
+      duration: 150,
+      ease: "Back.easeOut",
+    });
     this.refreshStats();
     this.hintText.setText("小猫正在找出口…").setColor("#5c7cff");
     this.bridge.score(this.moves * 10);
@@ -238,6 +270,9 @@ class CatchTheCatScene extends Phaser.Scene {
     }
 
     const position = this.getCellPosition(next);
+    const movingLeft = position.x < this.cat.x;
+    const mascot = this.cat.getByName("mascot") as Phaser.GameObjects.Image | null;
+    mascot?.setFlipX(!movingLeft);
     this.tweens.add({
       targets: this.cat,
       x: position.x,
@@ -394,45 +429,32 @@ class CatchTheCatScene extends Phaser.Scene {
       .setDepth(20)
       .setAlpha(0)
       .setScale(.94);
+    sharpenSceneText(this.children, RENDER_DPR);
     this.tweens.add({ targets: this.endLayer, alpha: 1, scale: 1, duration: 180, ease: "Back.easeOut" });
   }
 
   private createCat() {
-    const graphics = this.add.graphics();
-    graphics.lineStyle(3, COLORS.ink, 1);
-    graphics.fillStyle(COLORS.coral, 1);
-    graphics.fillTriangle(-13, -8, -8, -25, -2, -11);
-    graphics.fillTriangle(2, -11, 8, -25, 13, -8);
-    graphics.strokeTriangle(-13, -8, -8, -25, -2, -11);
-    graphics.strokeTriangle(2, -11, 8, -25, 13, -8);
-    graphics.fillCircle(0, -5, 15);
-    graphics.strokeCircle(0, -5, 15);
-    graphics.fillStyle(COLORS.ink, 1);
-    graphics.fillCircle(-5, -7, 2);
-    graphics.fillCircle(5, -7, 2);
-    graphics.fillTriangle(-2, -2, 2, -2, 0, 1);
-    graphics.lineStyle(2, COLORS.ink, 1);
-    graphics.lineBetween(-2, 2, -8, 4);
-    graphics.lineBetween(2, 2, 8, 4);
-    graphics.lineStyle(3, COLORS.coral, 1);
-    graphics.lineBetween(11, 7, 19, 12);
-    graphics.lineBetween(19, 12, 20, 3);
-    return this.add.container(0, 0, [graphics]).setDepth(10);
+    const halo = this.add.circle(0, 2, 25, COLORS.acid, .72)
+      .setStrokeStyle(1.5, COLORS.ink, .55);
+    const mascot = this.add.image(0, -2, "cat-mascot")
+      .setName("mascot")
+      .setDisplaySize(54, 54);
+    return this.add.container(0, 0, [halo, mascot]).setDepth(10);
   }
 }
 
 new Phaser.Game({
   type: Phaser.AUTO,
   parent: "game-root",
-  width: WIDTH,
-  height: HEIGHT,
+  width: WIDTH * RENDER_DPR,
+  height: HEIGHT * RENDER_DPR,
   backgroundColor: "#f3f0e8",
-  render: { antialias: true, roundPixels: true },
+  render: { antialias: true, pixelArt: false, roundPixels: false },
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
-    width: WIDTH,
-    height: HEIGHT,
+    width: WIDTH * RENDER_DPR,
+    height: HEIGHT * RENDER_DPR,
   },
   scene: CatchTheCatScene,
 });

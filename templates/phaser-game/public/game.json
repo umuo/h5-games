@@ -4,6 +4,7 @@
   "shortTitle": "__GAME_ID_UPPER__",
   "description": "一款刚刚诞生的新游戏。",
   "category": "休闲",
+  "icon": "arcade",
   "engine": "phaser",
   "orientation": "__ORIENTATION__",
   "version": "0.1.0",

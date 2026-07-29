@@ -1,4 +1,5 @@
 export type GameOrientation = "portrait" | "landscape" | "any";
+export type GameIcon = "cat" | "pin" | "pulse" | "cloud" | "memory" | "mine" | "shooter" | "water" | "arcade";
 
 interface GameCatalogBase {
   id: string;
@@ -6,6 +7,7 @@ interface GameCatalogBase {
   shortTitle: string;
   description: string;
   category: string;
+  icon: GameIcon;
   engine: string;
   orientation: GameOrientation;
   version: string;

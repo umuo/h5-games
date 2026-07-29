@@ -4,6 +4,7 @@
   "shortTitle": "云",
   "description": "轻点相邻云朵，享受一局轻松的消除游戏。",
   "category": "休闲",
+  "icon": "cloud",
   "engine": "iframe",
   "orientation": "portrait",
   "version": "external",

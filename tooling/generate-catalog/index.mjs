@@ -8,6 +8,7 @@ const iframeGamesRoot = path.join(root, "catalog/iframe");
 const output = path.join(root, "packages/game-catalog/src/generated.ts");
 const directories = await readdir(gamesRoot, { withFileTypes: true });
 const games = [];
+const gameIcons = new Set(["cat", "pin", "pulse", "cloud", "memory", "mine", "shooter", "water", "arcade"]);
 
 function addManifest(manifest, source) {
   if (!/^[a-z][a-z0-9-]*$/.test(manifest.id ?? "")) {
@@ -15,6 +16,9 @@ function addManifest(manifest, source) {
   }
   if (games.some((game) => game.id === manifest.id)) {
     throw new Error(`${source}: duplicate game id "${manifest.id}"`);
+  }
+  if (!gameIcons.has(manifest.icon)) {
+    throw new Error(`${source}: invalid or missing game icon`);
   }
   if (manifest.launchMode === "iframe") {
     const embedUrl = new URL(manifest.embedUrl);
