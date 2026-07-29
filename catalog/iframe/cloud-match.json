@@ -1,0 +1,14 @@
+{
+  "id": "cloud-match",
+  "title": "云朵消消乐",
+  "shortTitle": "云",
+  "description": "轻点相邻云朵，享受一局轻松的消除游戏。",
+  "category": "休闲",
+  "engine": "iframe",
+  "orientation": "portrait",
+  "version": "external",
+  "path": "/play/cloud-match",
+  "launchMode": "iframe",
+  "embedUrl": "https://xiaoxiaole.lacknb.com/",
+  "enabled": true
+}

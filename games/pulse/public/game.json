@@ -1,0 +1,12 @@
+{
+  "id": "pulse",
+  "title": "光脉：节拍反应",
+  "shortTitle": "PULSE",
+  "description": "在光环重合的一刻按下屏幕。",
+  "category": "反应力",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/pulse/",
+  "enabled": true
+}
