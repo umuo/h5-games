@@ -68,6 +68,19 @@ export const games: GameCatalogItem[] = [
     "enabled": true
   },
   {
+    "id": "sokoban",
+    "title": "推箱子",
+    "shortTitle": "BOX",
+    "description": "规划路线推动木箱，把所有货物准确送到金色目标点。",
+    "category": "益智",
+    "icon": "sokoban",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.2",
+    "path": "/games/sokoban/",
+    "enabled": true
+  },
+  {
     "id": "thunder-strike",
     "title": "雷电射击",
     "shortTitle": "雷电",
@@ -106,6 +119,21 @@ export const games: GameCatalogItem[] = [
     "path": "/play/cloud-match",
     "launchMode": "iframe",
     "embedUrl": "https://xiaoxiaole.lacknb.com/",
+    "enabled": true
+  },
+  {
+    "id": "undercover",
+    "title": "谁是卧底",
+    "shortTitle": "卧",
+    "description": "创建或加入房间，用描述和推理找出隐藏的卧底。",
+    "category": "休闲",
+    "icon": "undercover",
+    "engine": "iframe",
+    "orientation": "portrait",
+    "version": "external",
+    "path": "/play/undercover",
+    "launchMode": "iframe",
+    "embedUrl": "https://undercover.lacknb.com/",
     "enabled": true
   }
 ];

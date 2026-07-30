@@ -20,22 +20,22 @@ test("server-renders the game portal", async () => {
   assert.match(html, /光脉：节拍反应/);
   assert.match(html, /见缝插针/);
   assert.match(html, /围住小猫/);
-  assert.match(html, /云朵消消乐/);
   assert.match(html, /记忆翻牌/);
   assert.match(html, /扫雷/);
   assert.match(html, /雷电射击/);
   assert.match(html, /水排序/);
+  assert.match(html, /推箱子/);
   assert.match(html, /\/games\/pulse\//);
   assert.match(html, /\/games\/catch-the-cat\//);
   assert.match(html, /\/play\/cloud-match/);
   assert.match(html, /game-icon-cat/);
   assert.match(html, /game-icon-pin/);
   assert.match(html, /game-icon-pulse/);
-  assert.match(html, /game-icon-cloud/);
   assert.match(html, /game-icon-memory/);
   assert.match(html, /game-icon-mine/);
   assert.match(html, /game-icon-shooter/);
   assert.match(html, /game-icon-water/);
+  assert.match(html, /game-icon-sokoban/);
   assert.match(html, /游戏分类/);
   assert.match(html, /全部/);
   assert.match(html, /上滑加载更多|已经看到全部游戏/);
@@ -54,4 +54,17 @@ test("server-renders a sandboxed external game player", async () => {
   assert.match(html, /新窗口/);
   assert.match(html, /重新加载云朵消消乐/);
   assert.match(html, /xiaoxiaole\.lacknb\.com(?:<!-- -->)? · 安全嵌入/);
+});
+
+test("server-renders the undercover game in the external player", async () => {
+  const response = await render("/play/undercover");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /<title>谁是卧底 · 游点意思<\/title>/i);
+  assert.match(html, /src="https:\/\/undercover\.lacknb\.com\/"/);
+  assert.match(html, /sandbox="allow-scripts allow-same-origin allow-forms allow-pointer-lock allow-popups"/);
+  assert.match(html, /重新加载谁是卧底/);
+  assert.match(html, /卧<!-- --> · LOADING|卧 · LOADING/);
+  assert.doesNotMatch(html, /CLOUD MATCH · LOADING/);
+  assert.match(html, /undercover\.lacknb\.com(?:<!-- -->)? · 安全嵌入/);
 });

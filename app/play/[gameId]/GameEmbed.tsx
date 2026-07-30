@@ -51,7 +51,7 @@ export function GameEmbed({ game }: { game: IframeGameCatalogItem }) {
           <div className="embed-loading" role="status">
             <i aria-hidden="true" />
             <strong>{takingLonger ? "游戏加载得有点久…" : "正在加载游戏"}</strong>
-            <span>{takingLonger ? "可以重新加载，或在新窗口打开" : "CLOUD MATCH · LOADING"}</span>
+            <span>{takingLonger ? "可以重新加载，或在新窗口打开" : `${game.shortTitle} · LOADING`}</span>
             {takingLonger && (
               <button type="button" onClick={reloadGame}>重新加载 ↻</button>
             )}

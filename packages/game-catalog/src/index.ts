@@ -1,5 +1,5 @@
 export type GameOrientation = "portrait" | "landscape" | "any";
-export type GameIcon = "cat" | "pin" | "pulse" | "cloud" | "memory" | "mine" | "shooter" | "water" | "arcade";
+export type GameIcon = "cat" | "pin" | "pulse" | "cloud" | "memory" | "mine" | "shooter" | "water" | "sokoban" | "undercover" | "arcade";
 
 interface GameCatalogBase {
   id: string;

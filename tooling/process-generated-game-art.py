@@ -58,6 +58,30 @@ def process_cat() -> None:
     fit_alpha_sprite(source, (256, 256), 8).save(output_path, optimize=True)
 
 
+def process_sokoban() -> None:
+    atlas_path = ROOT / "games/sokoban/art/sokoban-atlas-transparent.png"
+    output_dir = ROOT / "games/sokoban/src/assets"
+    names = ("worker", "crate", "wall", "target")
+    atlas = Image.open(atlas_path).convert("RGBA")
+    cell_width = atlas.width // 2
+    cell_height = atlas.height // 2
+
+    for index, name in enumerate(names):
+        column = index % 2
+        row = index // 2
+        cell = atlas.crop((
+            column * cell_width,
+            row * cell_height,
+            (column + 1) * cell_width,
+            (row + 1) * cell_height,
+        ))
+        fit_alpha_sprite(cell, (256, 256), 10).save(
+            output_dir / f"sokoban-{name}.png",
+            optimize=True,
+        )
+
+
 if __name__ == "__main__":
     process_memory_icons()
     process_cat()
+    process_sokoban()

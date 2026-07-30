@@ -1,0 +1,13 @@
+{
+  "id": "sokoban",
+  "title": "推箱子",
+  "shortTitle": "BOX",
+  "description": "规划路线推动木箱，把所有货物准确送到金色目标点。",
+  "category": "益智",
+  "icon": "sokoban",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.2",
+  "path": "/games/sokoban/",
+  "enabled": true
+}

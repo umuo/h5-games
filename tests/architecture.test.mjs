@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFile, readdir } from "node:fs/promises";
 import test from "node:test";
 
-const gameIcons = new Set(["cat", "pin", "pulse", "cloud", "memory", "mine", "shooter", "water", "arcade"]);
+const gameIcons = new Set(["cat", "pin", "pulse", "cloud", "memory", "mine", "shooter", "water", "sokoban", "undercover", "arcade"]);
 
 test("every game has a unique valid manifest and workspace package", async () => {
   const root = new URL("../games/", import.meta.url);
@@ -32,6 +32,16 @@ test("every game has a unique valid manifest and workspace package", async () =>
     assert.match(manifest.path, /^\/play\/[a-z][a-z0-9-]*$/);
     ids.add(manifest.id);
   }
+});
+
+test("undercover is registered as a distinct embeddable party game", async () => {
+  const manifest = JSON.parse(await readFile(new URL("../catalog/iframe/undercover.json", import.meta.url), "utf8"));
+  const styles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+  assert.equal(manifest.title, "谁是卧底");
+  assert.equal(manifest.category, "休闲");
+  assert.equal(manifest.icon, "undercover");
+  assert.equal(manifest.embedUrl, "https://undercover.lacknb.com/");
+  assert.match(styles, /\.game-icon-undercover/);
 });
 
 test("catch-the-cat preserves its upstream MIT attribution", async () => {
@@ -109,6 +119,7 @@ test("all local Phaser games use the shared high-DPI rendering pipeline", async 
     "minesweeper",
     "thunder-strike",
     "water-sort",
+    "sokoban",
   ];
   for (const gameId of gameIds) {
     const source = await readFile(new URL(`../games/${gameId}/src/main.ts`, import.meta.url), "utf8");
@@ -182,4 +193,31 @@ test("water sort ships guaranteed-solvable difficulty levels and safe input gate
   assert.doesNotMatch(source, /cameras\.main\.flash/);
   assert.match(source, /scaleY:\s*1/);
   assert.match(source, /Phaser\.Scenes\.Events\.SHUTDOWN/);
+});
+
+test("sokoban ships 24 classic Microban levels, stable crate animation, and mobile controls", async () => {
+  const source = await readFile(new URL("../games/sokoban/src/main.ts", import.meta.url), "utf8");
+  const levels = JSON.parse(await readFile(new URL("../games/sokoban/src/levels.json", import.meta.url), "utf8"));
+  const notice = await readFile(new URL("../games/sokoban/NOTICE.md", import.meta.url), "utf8");
+  const styles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+  assert.equal(levels.length, 24);
+  assert.equal(levels.every((level, index) => level.name === `Microban ${String(index + 1).padStart(2, "0")}`), true);
+  assert.match(notice, /Microban/);
+  assert.match(notice, /David W\. Skinner/);
+  assert.match(source, /pointer\.positionToCamera\(this\.cameras\.main\)/);
+  assert.match(source, /private tryMove\(direction:\s*Direction\)/);
+  assert.match(source, /private undo\(\)/);
+  assert.match(source, /private showLevelPicker\(\)/);
+  assert.match(source, /this\.queuedDirection = direction/);
+  assert.match(source, /private floors = new Set<string>\(\)/);
+  assert.match(source, /this\.tweens\.killTweensOf\(boxSprite\)/);
+  assert.match(source, /this\.boxBaseScale\.x \* 1\.08/);
+  assert.match(source, /sprite\.setScale\(this\.boxBaseScale\.x,\s*this\.boxBaseScale\.y\)/);
+  assert.match(source, /this\.add\.rectangle\(x,\s*y,\s*64,\s*58,\s*0x17323b\)/);
+  assert.match(source, /this\.makeDirectionButton\(126,\s*796,\s*"◀"/);
+  assert.match(source, /this\.makeDirectionButton\(264,\s*796,\s*"▶"/);
+  assert.match(source, /Cubic\.Out/);
+  assert.match(source, /sokoban-worker\.png/);
+  assert.match(source, /sokoban-crate\.png/);
+  assert.match(styles, /\.game-icon-sokoban/);
 });
