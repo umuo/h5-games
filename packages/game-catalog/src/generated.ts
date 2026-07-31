@@ -16,6 +16,19 @@ export const games: GameCatalogItem[] = [
     "enabled": true
   },
   {
+    "id": "line-connect",
+    "title": "连线不交叉",
+    "shortTitle": "LINE",
+    "description": "连接所有同色端点，路线不能交叉，并用彩色路径铺满棋盘。",
+    "category": "益智",
+    "icon": "connect",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/line-connect/",
+    "enabled": true
+  },
+  {
     "id": "memory-match",
     "title": "记忆翻牌",
     "shortTitle": "MEM",

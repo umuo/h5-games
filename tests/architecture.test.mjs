@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFile, readdir } from "node:fs/promises";
 import test from "node:test";
 
-const gameIcons = new Set(["cat", "pin", "pulse", "cloud", "memory", "mine", "shooter", "water", "sokoban", "undercover", "arcade"]);
+const gameIcons = new Set(["cat", "pin", "pulse", "cloud", "memory", "mine", "shooter", "water", "sokoban", "connect", "undercover", "arcade"]);
 
 test("every game has a unique valid manifest and workspace package", async () => {
   const root = new URL("../games/", import.meta.url);
@@ -120,6 +120,7 @@ test("all local Phaser games use the shared high-DPI rendering pipeline", async 
     "thunder-strike",
     "water-sort",
     "sokoban",
+    "line-connect",
   ];
   for (const gameId of gameIds) {
     const source = await readFile(new URL(`../games/${gameId}/src/main.ts`, import.meta.url), "utf8");
@@ -220,4 +221,39 @@ test("sokoban ships 24 classic Microban levels, stable crate animation, and mobi
   assert.match(source, /sokoban-worker\.png/);
   assert.match(source, /sokoban-crate\.png/);
   assert.match(styles, /\.game-icon-sokoban/);
+});
+
+test("line connect ships 24 fully covered solvable boards and safe drag controls", async () => {
+  const source = await readFile(new URL("../games/line-connect/src/main.ts", import.meta.url), "utf8");
+  const levels = JSON.parse(await readFile(new URL("../games/line-connect/src/levels.json", import.meta.url), "utf8"));
+  const styles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+  assert.equal(levels.length, 24);
+  assert.deepEqual([...new Set(levels.map((level) => level.size))], [4, 5, 6, 7]);
+  for (const level of levels) {
+    const occupied = new Set();
+    assert.equal(level.pairs.length, level.solution.length);
+    level.solution.forEach((path, color) => {
+      assert.equal(path.length >= 2, true);
+      assert.deepEqual(path[0], level.pairs[color].start);
+      assert.deepEqual(path[path.length - 1], level.pairs[color].end);
+      path.forEach((point, index) => {
+        assert.equal(point.x >= 0 && point.x < level.size, true);
+        assert.equal(point.y >= 0 && point.y < level.size, true);
+        assert.equal(occupied.has(`${point.x},${point.y}`), false);
+        occupied.add(`${point.x},${point.y}`);
+        if (index > 0) {
+          const previous = path[index - 1];
+          assert.equal(Math.abs(point.x - previous.x) + Math.abs(point.y - previous.y), 1);
+        }
+      });
+    });
+    assert.equal(occupied.size, level.size * level.size);
+  }
+  assert.match(source, /pointer\.positionToCamera\(this\.cameras\.main\)/);
+  assert.match(source, /private extendToward\(target:\s*Point\)/);
+  assert.match(source, /路线不能交叉或重叠/);
+  assert.match(source, /private undo\(\)/);
+  assert.match(source, /private showHint\(\)/);
+  assert.match(source, /Phaser\.Scenes\.Events\.SHUTDOWN/);
+  assert.match(styles, /\.game-icon-connect/);
 });

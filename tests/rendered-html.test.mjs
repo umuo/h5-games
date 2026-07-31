@@ -25,6 +25,7 @@ test("server-renders the game portal", async () => {
   assert.match(html, /雷电射击/);
   assert.match(html, /水排序/);
   assert.match(html, /推箱子/);
+  assert.match(html, /连线不交叉/);
   assert.match(html, /\/games\/pulse\//);
   assert.match(html, /\/games\/catch-the-cat\//);
   assert.match(html, /\/play\/cloud-match/);
@@ -34,8 +35,8 @@ test("server-renders the game portal", async () => {
   assert.match(html, /game-icon-memory/);
   assert.match(html, /game-icon-mine/);
   assert.match(html, /game-icon-shooter/);
-  assert.match(html, /game-icon-water/);
   assert.match(html, /game-icon-sokoban/);
+  assert.match(html, /game-icon-connect/);
   assert.match(html, /游戏分类/);
   assert.match(html, /全部/);
   assert.match(html, /上滑加载更多|已经看到全部游戏/);
