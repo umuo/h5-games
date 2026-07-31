@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import {
+  bindGameLifecycle,
   configureHiDpiCamera,
   createGameBridge,
   createGameStorage,
@@ -68,17 +69,10 @@ class PulseScene extends Phaser.Scene {
     this.refreshFooter(highScore);
 
     const handlePointer = () => this.handleTap();
-    const pauseGame = () => this.scene.pause();
-    const resumeGame = () => {
-      if (!this.ended) this.scene.resume();
-    };
     this.input.on("pointerup", handlePointer);
-    this.game.events.on(Phaser.Core.Events.BLUR, pauseGame);
-    this.game.events.on(Phaser.Core.Events.FOCUS, resumeGame);
+    bindGameLifecycle(this);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       this.input.off("pointerup", handlePointer);
-      this.game.events.off(Phaser.Core.Events.BLUR, pauseGame);
-      this.game.events.off(Phaser.Core.Events.FOCUS, resumeGame);
     });
     sharpenSceneText(this.children, RENDER_DPR);
     this.bridge.ready();

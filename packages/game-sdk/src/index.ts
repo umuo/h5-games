@@ -74,6 +74,101 @@ interface ResolutionAware {
   list?: unknown[];
 }
 
+interface LifecycleEventEmitter {
+  on(event: string, listener: () => void): unknown;
+  off(event: string, listener: () => void): unknown;
+}
+
+interface LifecycleScene {
+  game: {
+    events: LifecycleEventEmitter;
+    loop: {
+      focus(): unknown;
+      resume(): unknown;
+    };
+  };
+  input: {
+    enabled: boolean;
+    resetPointers(): void;
+  };
+  scene: {
+    isPaused(): boolean;
+    pause(): unknown;
+    resume(): unknown;
+  };
+  events: {
+    once(event: string, listener: () => void): unknown;
+  };
+}
+
+interface GameLifecycleOptions {
+  onInterrupt?: () => void;
+}
+
+/**
+ * Keeps Phaser input healthy across mobile lock-screen, app switching and
+ * back-forward-cache restores. Scene suspension is tracked here so a visibility
+ * or pageshow recovery can safely resume only pauses created by this helper.
+ */
+export function bindGameLifecycle(
+  scene: LifecycleScene,
+  options: GameLifecycleOptions = {},
+) {
+  let destroyed = false;
+  let pausedByLifecycle = false;
+
+  const resetInput = () => {
+    if (destroyed) return;
+    options.onInterrupt?.();
+    scene.input.resetPointers();
+  };
+  const suspend = () => {
+    resetInput();
+    if (!scene.scene.isPaused()) {
+      pausedByLifecycle = true;
+      scene.scene.pause();
+    }
+  };
+  const recover = () => {
+    if (destroyed || document.hidden) return;
+    scene.game.loop.focus();
+    scene.game.loop.resume();
+    if (pausedByLifecycle && scene.scene.isPaused()) scene.scene.resume();
+    pausedByLifecycle = false;
+    scene.input.enabled = true;
+    resetInput();
+  };
+  const visibilityChanged = () => {
+    if (document.hidden) suspend();
+    else recover();
+  };
+
+  scene.game.events.on("blur", suspend);
+  scene.game.events.on("hidden", suspend);
+  scene.game.events.on("focus", recover);
+  scene.game.events.on("visible", recover);
+  document.addEventListener("visibilitychange", visibilityChanged);
+  window.addEventListener("pageshow", recover);
+  window.addEventListener("pointercancel", resetInput);
+  window.addEventListener("touchcancel", resetInput);
+
+  const cleanup = () => {
+    if (destroyed) return;
+    destroyed = true;
+    scene.game.events.off("blur", suspend);
+    scene.game.events.off("hidden", suspend);
+    scene.game.events.off("focus", recover);
+    scene.game.events.off("visible", recover);
+    document.removeEventListener("visibilitychange", visibilityChanged);
+    window.removeEventListener("pageshow", recover);
+    window.removeEventListener("pointercancel", resetInput);
+    window.removeEventListener("touchcancel", resetInput);
+  };
+
+  scene.events.once("shutdown", cleanup);
+  return cleanup;
+}
+
 export function getGameRenderDpr(maxDpr = 2) {
   if (typeof window === "undefined") return 1;
   const deviceDpr = Number.isFinite(window.devicePixelRatio) ? window.devicePixelRatio : 1;

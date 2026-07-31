@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import {
+  bindGameLifecycle,
   configureHiDpiCamera,
   createGameBridge,
   createGameStorage,
@@ -65,6 +66,11 @@ class ThunderStrikeScene extends Phaser.Scene {
     this.createHud();
     this.createActors();
     this.createInput();
+    bindGameLifecycle(this, {
+      onInterrupt: () => {
+        this.dragging = false;
+      },
+    });
     this.createStartLayer();
     sharpenSceneText(this.children, RENDER_DPR);
     this.bridge.ready();

@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import {
+  bindGameLifecycle,
   configureHiDpiCamera,
   createGameBridge,
   createGameStorage,
@@ -437,22 +438,18 @@ class SokobanScene extends Phaser.Scene {
         this.scene.restart({ levelIndex: this.levelIndex });
       }
     };
-    const pauseGame = () => this.scene.pause();
-    const resumeGame = () => {
-      if (!this.ended) this.scene.resume();
-    };
-
     this.input.on("pointerdown", pointerDown);
     this.input.on("pointerup", pointerUp);
     this.input.keyboard?.on("keydown", keyDown);
-    this.game.events.on(Phaser.Core.Events.BLUR, pauseGame);
-    this.game.events.on(Phaser.Core.Events.FOCUS, resumeGame);
+    bindGameLifecycle(this, {
+      onInterrupt: () => {
+        this.swipeStart = null;
+      },
+    });
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       this.input.off("pointerdown", pointerDown);
       this.input.off("pointerup", pointerUp);
       this.input.keyboard?.off("keydown", keyDown);
-      this.game.events.off(Phaser.Core.Events.BLUR, pauseGame);
-      this.game.events.off(Phaser.Core.Events.FOCUS, resumeGame);
     });
   }
 

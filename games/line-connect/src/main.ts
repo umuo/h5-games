@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import {
+  bindGameLifecycle,
   configureHiDpiCamera,
   createGameBridge,
   createGameStorage,
@@ -313,21 +314,16 @@ class LineConnectScene extends Phaser.Scene {
     const pointerDown = (pointer: Phaser.Input.Pointer) => this.handlePointerDown(pointer);
     const pointerMove = (pointer: Phaser.Input.Pointer) => this.handlePointerMove(pointer);
     const pointerUp = (pointer: Phaser.Input.Pointer) => this.handlePointerUp(pointer);
-    const pauseGame = () => this.scene.pause();
-    const resumeGame = () => {
-      if (!this.ended) this.scene.resume();
-    };
     this.input.on("pointerdown", pointerDown);
     this.input.on("pointermove", pointerMove);
     this.input.on("pointerup", pointerUp);
-    this.game.events.on(Phaser.Core.Events.BLUR, pauseGame);
-    this.game.events.on(Phaser.Core.Events.FOCUS, resumeGame);
+    bindGameLifecycle(this, {
+      onInterrupt: () => this.cancelActivePath(),
+    });
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       this.input.off("pointerdown", pointerDown);
       this.input.off("pointermove", pointerMove);
       this.input.off("pointerup", pointerUp);
-      this.game.events.off(Phaser.Core.Events.BLUR, pauseGame);
-      this.game.events.off(Phaser.Core.Events.FOCUS, resumeGame);
     });
   }
 
@@ -387,6 +383,16 @@ class LineConnectScene extends Phaser.Scene {
 
   private handlePointerUp(pointer: Phaser.Input.Pointer) {
     if (this.activeColor === null || this.activePointerId !== pointer.id) return;
+    this.finishActivePath();
+  }
+
+  private cancelActivePath() {
+    if (this.activeColor === null) return;
+    this.finishActivePath();
+  }
+
+  private finishActivePath() {
+    if (this.activeColor === null) return;
     const color = this.activeColor;
     this.activeColor = null;
     this.activePointerId = null;

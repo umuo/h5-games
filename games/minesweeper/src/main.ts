@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import {
+  bindGameLifecycle,
   configureHiDpiCamera,
   createGameBridge,
   createGameStorage,
@@ -113,15 +114,8 @@ class MinesweeperScene extends Phaser.Scene {
     this.createBoard();
     this.createControls();
 
-    const pauseGame = () => this.scene.pause();
-    const resumeGame = () => {
-      if (!this.ended) this.scene.resume();
-    };
-    this.game.events.on(Phaser.Core.Events.BLUR, pauseGame);
-    this.game.events.on(Phaser.Core.Events.FOCUS, resumeGame);
-    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
-      this.game.events.off(Phaser.Core.Events.BLUR, pauseGame);
-      this.game.events.off(Phaser.Core.Events.FOCUS, resumeGame);
+    bindGameLifecycle(this, {
+      onInterrupt: () => this.cancelPendingPresses(),
     });
 
     sharpenSceneText(this.children, RENDER_DPR);
@@ -307,6 +301,16 @@ class MinesweeperScene extends Phaser.Scene {
       this.tweens.add({ targets: cell.container, scale: 1, duration: 90 });
       cell.pressTimer?.remove(false);
       cell.pressTimer = null;
+    });
+  }
+
+  private cancelPendingPresses() {
+    this.cells.flat().forEach((cell) => {
+      cell.pressTimer?.remove(false);
+      cell.pressTimer = null;
+      cell.longPressed = false;
+      this.tweens.killTweensOf(cell.container);
+      cell.container.setScale(1);
     });
   }
 

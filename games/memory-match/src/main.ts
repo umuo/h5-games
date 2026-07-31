@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import {
+  bindGameLifecycle,
   configureHiDpiCamera,
   createGameBridge,
   createGameStorage,
@@ -127,16 +128,9 @@ class MemoryMatchScene extends Phaser.Scene {
       letterSpacing: 1,
     }).setOrigin(.5);
 
-    const pauseGame = () => this.scene.pause();
-    const resumeGame = () => {
-      if (!this.ended) this.scene.resume();
-    };
-    this.game.events.on(Phaser.Core.Events.BLUR, pauseGame);
-    this.game.events.on(Phaser.Core.Events.FOCUS, resumeGame);
+    bindGameLifecycle(this);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       this.input.off("pointerup", handleBoardPointer);
-      this.game.events.off(Phaser.Core.Events.BLUR, pauseGame);
-      this.game.events.off(Phaser.Core.Events.FOCUS, resumeGame);
     });
 
     sharpenSceneText(this.children, RENDER_DPR);

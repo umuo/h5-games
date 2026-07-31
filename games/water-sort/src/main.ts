@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import {
+  bindGameLifecycle,
   configureHiDpiCamera,
   createGameBridge,
   createGameStorage,
@@ -107,17 +108,10 @@ class WaterSortScene extends Phaser.Scene {
     this.refreshAll();
 
     const handleBoardPointer = (pointer: Phaser.Input.Pointer) => this.handleBoardTap(pointer);
-    const pauseGame = () => this.scene.pause();
-    const resumeGame = () => {
-      if (!this.ended) this.scene.resume();
-    };
     this.input.on("pointerup", handleBoardPointer);
-    this.game.events.on(Phaser.Core.Events.BLUR, pauseGame);
-    this.game.events.on(Phaser.Core.Events.FOCUS, resumeGame);
+    bindGameLifecycle(this);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       this.input.off("pointerup", handleBoardPointer);
-      this.game.events.off(Phaser.Core.Events.BLUR, pauseGame);
-      this.game.events.off(Phaser.Core.Events.FOCUS, resumeGame);
     });
 
     this.bridge.ready();

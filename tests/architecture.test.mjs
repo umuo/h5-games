@@ -80,13 +80,52 @@ test("minesweeper ships mobile difficulty levels and first-tap protection", asyn
   assert.match(source, /已连开周围安全区域/);
 });
 
-test("local puzzle games clean up global lifecycle listeners on restart", async () => {
-  for (const gameId of ["pin-gap", "pulse", "memory-match", "minesweeper"]) {
+test("all local games recover input after mobile suspension", async () => {
+  const gameIds = [
+    "catch-the-cat",
+    "pin-gap",
+    "pulse",
+    "memory-match",
+    "minesweeper",
+    "thunder-strike",
+    "water-sort",
+    "sokoban",
+    "line-connect",
+  ];
+  const sdk = await readFile(new URL("../packages/game-sdk/src/index.ts", import.meta.url), "utf8");
+  assert.match(sdk, /export function bindGameLifecycle/);
+  assert.match(sdk, /scene\.game\.loop\.focus\(\)/);
+  assert.match(sdk, /scene\.game\.loop\.resume\(\)/);
+  assert.match(sdk, /pausedByLifecycle = true/);
+  assert.match(sdk, /scene\.scene\.pause\(\)/);
+  assert.match(sdk, /pausedByLifecycle && scene\.scene\.isPaused\(\)/);
+  assert.match(sdk, /scene\.scene\.resume\(\)/);
+  assert.match(sdk, /scene\.input\.resetPointers\(\)/);
+  assert.match(sdk, /document\.addEventListener\("visibilitychange"/);
+  assert.match(sdk, /window\.addEventListener\("pageshow"/);
+  assert.match(sdk, /window\.addEventListener\("pointercancel"/);
+  assert.match(sdk, /window\.addEventListener\("touchcancel"/);
+  assert.match(sdk, /document\.removeEventListener\("visibilitychange"/);
+  assert.match(sdk, /window\.removeEventListener\("pageshow"/);
+
+  for (const gameId of gameIds) {
     const source = await readFile(new URL(`../games/${gameId}/src/main.ts`, import.meta.url), "utf8");
-    assert.match(source, /Phaser\.Scenes\.Events\.SHUTDOWN/, `${gameId} must handle scene shutdown`);
-    assert.match(source, /game\.events\.off\(Phaser\.Core\.Events\.BLUR/, `${gameId} must remove blur listener`);
-    assert.match(source, /game\.events\.off\(Phaser\.Core\.Events\.FOCUS/, `${gameId} must remove focus listener`);
+    assert.match(source, /bindGameLifecycle\(this/, `${gameId} must bind lifecycle recovery`);
+    assert.doesNotMatch(
+      source,
+      /game\.events\.on\(Phaser\.Core\.Events\.BLUR/,
+      `${gameId} must not pause its scene on blur`,
+    );
   }
+
+  const lineConnect = await readFile(new URL("../games/line-connect/src/main.ts", import.meta.url), "utf8");
+  const minesweeper = await readFile(new URL("../games/minesweeper/src/main.ts", import.meta.url), "utf8");
+  const sokoban = await readFile(new URL("../games/sokoban/src/main.ts", import.meta.url), "utf8");
+  const thunderStrike = await readFile(new URL("../games/thunder-strike/src/main.ts", import.meta.url), "utf8");
+  assert.match(lineConnect, /onInterrupt:\s*\(\) => this\.cancelActivePath\(\)/);
+  assert.match(minesweeper, /onInterrupt:\s*\(\) => this\.cancelPendingPresses\(\)/);
+  assert.match(sokoban, /onInterrupt:[\s\S]*this\.swipeStart = null/);
+  assert.match(thunderStrike, /onInterrupt:[\s\S]*this\.dragging = false/);
 });
 
 test("memory match loads eight generated card-face assets", async () => {
