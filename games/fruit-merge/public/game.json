@@ -1,0 +1,13 @@
+{
+  "id": "fruit-merge",
+  "title": "合成果实",
+  "shortTitle": "果实",
+  "description": "拖动投放水果，相同果实相碰合成更大的，冲击大西瓜。",
+  "category": "休闲",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/fruit-merge/",
+  "enabled": true
+}

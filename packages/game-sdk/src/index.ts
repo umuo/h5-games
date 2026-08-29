@@ -1,3 +1,6 @@
+export { createAudioKit } from "./audio";
+export type { AudioKit } from "./audio";
+
 export type GameToPlatformEvent =
   | { type: "READY"; gameId: string; version: string }
   | { type: "START"; gameId: string }

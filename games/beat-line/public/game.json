@@ -1,0 +1,13 @@
+{
+  "id": "beat-line",
+  "title": "律动光轨",
+  "shortTitle": "律动",
+  "description": "踩着合成器的节拍敲击光轨，你的每次命中都在演奏主旋律。",
+  "category": "反应力",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/beat-line/",
+  "enabled": true
+}
