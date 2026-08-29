@@ -1,0 +1,13 @@
+{
+  "id": "mini-sudoku",
+  "title": "数独小解",
+  "shortTitle": "数独",
+  "description": "六宫迷你数独，每行每列每宫数字不重复。",
+  "category": "益智",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/mini-sudoku/",
+  "enabled": true
+}

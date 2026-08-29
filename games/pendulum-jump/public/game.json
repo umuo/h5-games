@@ -1,0 +1,13 @@
+{
+  "id": "pendulum-jump",
+  "title": "钟摆跳",
+  "shortTitle": "钟摆",
+  "description": "松开绳索乘势飞出，落到下一个锚点上继续摆荡。",
+  "category": "休闲",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/pendulum-jump/",
+  "enabled": true
+}
