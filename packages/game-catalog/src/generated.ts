@@ -198,6 +198,19 @@ export const games: GameCatalogItem[] = [
     "enabled": true
   },
   {
+    "id": "gold-miner",
+    "title": "黄金矿工",
+    "shortTitle": "矿工",
+    "description": "摆动的钩爪看准就抓，在限时内挖够目标金额。",
+    "category": "休闲",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/gold-miner/",
+    "enabled": true
+  },
+  {
     "id": "gomoku",
     "title": "五子棋",
     "shortTitle": "五子",
@@ -523,6 +536,19 @@ export const games: GameCatalogItem[] = [
     "enabled": true
   },
   {
+    "id": "slingshot",
+    "title": "弹弓打靶",
+    "shortTitle": "弹弓",
+    "description": "拖动弹弓调整角度力度，击落靶架上的全部目标。",
+    "category": "街机",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/slingshot/",
+    "enabled": true
+  },
+  {
     "id": "snake",
     "title": "贪吃蛇",
     "shortTitle": "SNAKE",
@@ -572,6 +598,19 @@ export const games: GameCatalogItem[] = [
     "orientation": "portrait",
     "version": "1.1.0",
     "path": "/games/thunder-strike/",
+    "enabled": true
+  },
+  {
+    "id": "tic-tac-toe",
+    "title": "三子棋",
+    "shortTitle": "三子",
+    "description": "与 AI 对弈三子棋，连成一线即可获胜。",
+    "category": "益智",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/tic-tac-toe/",
     "enabled": true
   },
   {

@@ -1,0 +1,13 @@
+{
+  "id": "tic-tac-toe",
+  "title": "三子棋",
+  "shortTitle": "三子",
+  "description": "与 AI 对弈三子棋，连成一线即可获胜。",
+  "category": "益智",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/tic-tac-toe/",
+  "enabled": true
+}

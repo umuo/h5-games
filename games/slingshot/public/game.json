@@ -1,0 +1,13 @@
+{
+  "id": "slingshot",
+  "title": "弹弓打靶",
+  "shortTitle": "弹弓",
+  "description": "拖动弹弓调整角度力度，击落靶架上的全部目标。",
+  "category": "街机",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/slingshot/",
+  "enabled": true
+}

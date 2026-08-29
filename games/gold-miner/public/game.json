@@ -1,0 +1,13 @@
+{
+  "id": "gold-miner",
+  "title": "黄金矿工",
+  "shortTitle": "矿工",
+  "description": "摆动的钩爪看准就抓，在限时内挖够目标金额。",
+  "category": "休闲",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/gold-miner/",
+  "enabled": true
+}
