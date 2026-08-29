@@ -1,0 +1,13 @@
+{
+  "id": "same-pop",
+  "title": "点点消除",
+  "shortTitle": "点点",
+  "description": "点击成片的同色方块消除它们，清空棋盘拿满分。",
+  "category": "休闲",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/same-pop/",
+  "enabled": true
+}

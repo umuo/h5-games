@@ -1,0 +1,13 @@
+{
+  "id": "reversi",
+  "title": "黑白棋",
+  "shortTitle": "黑白",
+  "description": "夹住对方棋子翻转成己方颜色，终局占地多者胜。",
+  "category": "益智",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/reversi/",
+  "enabled": true
+}

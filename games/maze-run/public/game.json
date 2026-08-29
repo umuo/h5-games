@@ -1,0 +1,13 @@
+{
+  "id": "maze-run",
+  "title": "迷宫寻宝",
+  "shortTitle": "迷宫",
+  "description": "在程序生成的迷宫里收集星星，找到通往出口的路。",
+  "category": "街机",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/maze-run/",
+  "enabled": true
+}

@@ -159,6 +159,19 @@ export const games: GameCatalogItem[] = [
     "enabled": true
   },
   {
+    "id": "maze-run",
+    "title": "迷宫寻宝",
+    "shortTitle": "迷宫",
+    "description": "在程序生成的迷宫里收集星星，找到通往出口的路。",
+    "category": "街机",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/maze-run/",
+    "enabled": true
+  },
+  {
     "id": "memory-match",
     "title": "记忆翻牌",
     "shortTitle": "MEM",
@@ -273,6 +286,32 @@ export const games: GameCatalogItem[] = [
     "orientation": "portrait",
     "version": "1.2.0",
     "path": "/games/pulse/",
+    "enabled": true
+  },
+  {
+    "id": "reversi",
+    "title": "黑白棋",
+    "shortTitle": "黑白",
+    "description": "夹住对方棋子翻转成己方颜色，终局占地多者胜。",
+    "category": "益智",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/reversi/",
+    "enabled": true
+  },
+  {
+    "id": "same-pop",
+    "title": "点点消除",
+    "shortTitle": "点点",
+    "description": "点击成片的同色方块消除它们，清空棋盘拿满分。",
+    "category": "休闲",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/same-pop/",
     "enabled": true
   },
   {
