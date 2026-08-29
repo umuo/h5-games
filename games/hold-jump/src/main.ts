@@ -198,7 +198,6 @@ class HoldJumpScene extends Phaser.Scene {
     const sign = Math.sign(next.x - current.x) || 1;
     const distance = MIN_JUMP + power * (MAX_JUMP - MIN_JUMP);
     const duration = 480 + distance * .35;
-    const peak = 80 + distance * .28;
     const from = new Phaser.Math.Vector2(current.x, current.y - 2);
     const planeY = next.y - 2;
     this.flight = { from, toX: current.x + sign * distance, planeY, start: this.time.now, duration, sign };
