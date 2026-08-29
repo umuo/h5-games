@@ -88,8 +88,11 @@ test("server-renders the game portal", async () => {
   assert.match(html, /\/games\/peg-solitaire\//);
   assert.match(html, /\/games\/lunar-lander\//);
   assert.match(html, /\/games\/bullet-dodge\//);
+  assert.match(html, /泡泡龙/);
+  assert.match(html, /气垫球/);
+  assert.match(html, /\/games\/bubble-shooter\//);
+  assert.match(html, /\/games\/air-hockey\//);
   assert.match(html, /\/play\/cloud-match/);
-  assert.match(html, /game-icon-cat/);
   assert.match(html, /game-icon-arcade/);
   assert.match(html, /游戏分类/);
   assert.match(html, /全部/);

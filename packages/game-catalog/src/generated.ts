@@ -16,6 +16,19 @@ export const games: GameCatalogItem[] = [
     "enabled": true
   },
   {
+    "id": "air-hockey",
+    "title": "气垫球",
+    "shortTitle": "冰球",
+    "description": "拖动球杆与AI对决气垫球，先进七球者赢。",
+    "category": "休闲",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/air-hockey/",
+    "enabled": true
+  },
+  {
     "id": "basket-catch",
     "title": "天降小鸡",
     "shortTitle": "接蛋",
@@ -65,6 +78,19 @@ export const games: GameCatalogItem[] = [
     "orientation": "portrait",
     "version": "1.0.0",
     "path": "/games/breakout/",
+    "enabled": true
+  },
+  {
+    "id": "bubble-shooter",
+    "title": "泡泡龙",
+    "shortTitle": "泡泡",
+    "description": "瞄准发射同色泡泡，三颗相连即爆炸，别让泡泡压境。",
+    "category": "益智",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/bubble-shooter/",
     "enabled": true
   },
   {

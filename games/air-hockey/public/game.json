@@ -1,0 +1,13 @@
+{
+  "id": "air-hockey",
+  "title": "气垫球",
+  "shortTitle": "冰球",
+  "description": "拖动球杆与AI对决气垫球，先进七球者赢。",
+  "category": "休闲",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/air-hockey/",
+  "enabled": true
+}
