@@ -1,0 +1,13 @@
+{
+  "id": "link-pair",
+  "title": "连连看",
+  "shortTitle": "连连",
+  "description": "连接两颗相同图案，路径最多两个拐角，清空全场。",
+  "category": "益智",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/link-pair/",
+  "enabled": true
+}

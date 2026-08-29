@@ -1,0 +1,13 @@
+{
+  "id": "nim-stones",
+  "title": "取石子",
+  "shortTitle": "取石",
+  "description": "与AI轮流取石子，拿到最后一颗的人获得胜利。",
+  "category": "益智",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/nim-stones/",
+  "enabled": true
+}

@@ -159,6 +159,19 @@ export const games: GameCatalogItem[] = [
     "enabled": true
   },
   {
+    "id": "flap-bird",
+    "title": "冲刺小鸟",
+    "shortTitle": "小鸟",
+    "description": "轻点振翅穿过管道缝隙，坚持得越久分数越高。",
+    "category": "街机",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/flap-bird/",
+    "enabled": true
+  },
+  {
     "id": "frog-cross",
     "title": "青蛙过河",
     "shortTitle": "青蛙",
@@ -260,6 +273,19 @@ export const games: GameCatalogItem[] = [
     "orientation": "portrait",
     "version": "1.0.0",
     "path": "/games/line-connect/",
+    "enabled": true
+  },
+  {
+    "id": "link-pair",
+    "title": "连连看",
+    "shortTitle": "连连",
+    "description": "连接两颗相同图案，路径最多两个拐角，清空全场。",
+    "category": "益智",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/link-pair/",
     "enabled": true
   },
   {
@@ -377,6 +403,19 @@ export const games: GameCatalogItem[] = [
     "orientation": "portrait",
     "version": "1.0.0",
     "path": "/games/neon-raid/",
+    "enabled": true
+  },
+  {
+    "id": "nim-stones",
+    "title": "取石子",
+    "shortTitle": "取石",
+    "description": "与AI轮流取石子，拿到最后一颗的人获得胜利。",
+    "category": "益智",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/nim-stones/",
     "enabled": true
   },
   {
