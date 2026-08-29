@@ -1,0 +1,15 @@
+{
+  "name": "@web-games/game-six-guess",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@web-games/game-sdk": "*",
+    "phaser": "3.90.0"
+  }
+}

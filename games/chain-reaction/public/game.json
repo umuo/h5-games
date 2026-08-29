@@ -1,0 +1,13 @@
+{
+  "id": "chain-reaction",
+  "title": "连锁反应",
+  "shortTitle": "连锁",
+  "description": "一次引爆引发链式爆炸，清掉规定的目标数量。",
+  "category": "休闲",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/chain-reaction/",
+  "enabled": true
+}

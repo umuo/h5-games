@@ -1,0 +1,13 @@
+{
+  "id": "six-guess",
+  "title": "猜数字",
+  "shortTitle": "猜数",
+  "description": "推理隐藏的四位数字，用位置与数量线索锁定答案。",
+  "category": "益智",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/six-guess/",
+  "enabled": true
+}

@@ -120,6 +120,32 @@ export const games: GameCatalogItem[] = [
     "enabled": true
   },
   {
+    "id": "chain-reaction",
+    "title": "连锁反应",
+    "shortTitle": "连锁",
+    "description": "一次引爆引发链式爆炸，清掉规定的目标数量。",
+    "category": "休闲",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/chain-reaction/",
+    "enabled": true
+  },
+  {
+    "id": "color-fill",
+    "title": "色彩蔓延",
+    "shortTitle": "蔓延",
+    "description": "从左上角开始选择颜色向外蔓延，限步内染遍全盘。",
+    "category": "益智",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/color-fill/",
+    "enabled": true
+  },
+  {
     "id": "dino-run",
     "title": "恐龙快跑",
     "shortTitle": "恐龙",
@@ -442,6 +468,19 @@ export const games: GameCatalogItem[] = [
     "orientation": "portrait",
     "version": "1.0.0",
     "path": "/games/same-pop/",
+    "enabled": true
+  },
+  {
+    "id": "six-guess",
+    "title": "猜数字",
+    "shortTitle": "猜数",
+    "description": "推理隐藏的四位数字，用位置与数量线索锁定答案。",
+    "category": "益智",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/six-guess/",
     "enabled": true
   },
   {

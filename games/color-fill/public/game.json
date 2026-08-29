@@ -1,0 +1,13 @@
+{
+  "id": "color-fill",
+  "title": "色彩蔓延",
+  "shortTitle": "蔓延",
+  "description": "从左上角开始选择颜色向外蔓延，限步内染遍全盘。",
+  "category": "益智",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/color-fill/",
+  "enabled": true
+}
