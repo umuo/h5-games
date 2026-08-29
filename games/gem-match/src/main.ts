@@ -401,7 +401,7 @@ class GemMatchScene extends Phaser.Scene {
     this.cascade += 1;
     const toRemove = new Map<string, { col: number; row: number }>();
     let longest = 3;
-    let centroid = { x: CENTER_X, y: BOARD_Y + (ROWS * CELL) / 2 };
+    const centroid = { x: CENTER_X, y: BOARD_Y + (ROWS * CELL) / 2 };
     let centroidCount = 0;
     for (const run of runs) {
       longest = Math.max(longest, run.length);
