@@ -1,0 +1,13 @@
+{
+  "id": "gomoku",
+  "title": "五子棋",
+  "shortTitle": "五子",
+  "description": "执黑先行与AI对弈五子棋，先连成五子者胜。",
+  "category": "益智",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/gomoku/",
+  "enabled": true
+}

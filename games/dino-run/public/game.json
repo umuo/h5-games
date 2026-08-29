@@ -1,0 +1,13 @@
+{
+  "id": "dino-run",
+  "title": "恐龙快跑",
+  "shortTitle": "恐龙",
+  "description": "轻点跳跃躲避仙人掌与飞鸟，看看能跑多远。",
+  "category": "街机",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/dino-run/",
+  "enabled": true
+}

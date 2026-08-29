@@ -1,0 +1,13 @@
+{
+  "id": "basket-catch",
+  "title": "天降小鸡",
+  "shortTitle": "接蛋",
+  "description": "拖动篮子接住天降的小鸡，小心别接住炸弹。",
+  "category": "休闲",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/basket-catch/",
+  "enabled": true
+}
