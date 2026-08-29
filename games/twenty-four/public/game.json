@@ -1,0 +1,13 @@
+{
+  "id": "twenty-four",
+  "title": "24点挑战",
+  "shortTitle": "廿四",
+  "description": "四张牌加减乘除凑出 24，限时心算挑战。",
+  "category": "益智",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/twenty-four/",
+  "enabled": true
+}

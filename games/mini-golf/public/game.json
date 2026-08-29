@@ -1,0 +1,13 @@
+{
+  "id": "mini-golf",
+  "title": "迷你高尔夫",
+  "shortTitle": "高尔夫",
+  "description": "拖动瞄准控制力度，用最少的杆数把球打进洞。",
+  "category": "休闲",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/mini-golf/",
+  "enabled": true
+}

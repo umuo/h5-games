@@ -1,0 +1,13 @@
+{
+  "id": "lights-out",
+  "title": "熄灯挑战",
+  "shortTitle": "熄灯",
+  "description": "点亮一盏会翻转十字相邻，把整片灯全部熄灭。",
+  "category": "益智",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/lights-out/",
+  "enabled": true
+}

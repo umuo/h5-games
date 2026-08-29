@@ -198,6 +198,19 @@ export const games: GameCatalogItem[] = [
     "enabled": true
   },
   {
+    "id": "lights-out",
+    "title": "熄灯挑战",
+    "shortTitle": "熄灯",
+    "description": "点亮一盏会翻转十字相邻，把整片灯全部熄灭。",
+    "category": "益智",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/lights-out/",
+    "enabled": true
+  },
+  {
     "id": "line-connect",
     "title": "连线不交叉",
     "shortTitle": "LINE",
@@ -286,6 +299,19 @@ export const games: GameCatalogItem[] = [
     "orientation": "portrait",
     "version": "1.2.0",
     "path": "/games/minesweeper/",
+    "enabled": true
+  },
+  {
+    "id": "mini-golf",
+    "title": "迷你高尔夫",
+    "shortTitle": "高尔夫",
+    "description": "拖动瞄准控制力度，用最少的杆数把球打进洞。",
+    "category": "休闲",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/mini-golf/",
     "enabled": true
   },
   {
@@ -507,6 +533,19 @@ export const games: GameCatalogItem[] = [
     "orientation": "portrait",
     "version": "1.1.0",
     "path": "/games/thunder-strike/",
+    "enabled": true
+  },
+  {
+    "id": "twenty-four",
+    "title": "24点挑战",
+    "shortTitle": "廿四",
+    "description": "四张牌加减乘除凑出 24，限时心算挑战。",
+    "category": "益智",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/twenty-four/",
     "enabled": true
   },
   {
