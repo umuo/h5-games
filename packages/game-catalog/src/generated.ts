@@ -42,6 +42,19 @@ export const games: GameCatalogItem[] = [
     "enabled": true
   },
   {
+    "id": "battleship",
+    "title": "海战棋",
+    "shortTitle": "海战",
+    "description": "布置舰队搜索敌方海域，先击沉全部战舰者胜。",
+    "category": "益智",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/battleship/",
+    "enabled": true
+  },
+  {
     "id": "beat-line",
     "title": "律动光轨",
     "shortTitle": "律动",
@@ -234,6 +247,19 @@ export const games: GameCatalogItem[] = [
     "orientation": "portrait",
     "version": "1.0.0",
     "path": "/games/gomoku/",
+    "enabled": true
+  },
+  {
+    "id": "hanoi-tower",
+    "title": "汉诺塔",
+    "shortTitle": "汉诺塔",
+    "description": "把整塔圆盘移到最右柱，大盘永不可压小盘。",
+    "category": "益智",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/hanoi-tower/",
     "enabled": true
   },
   {

@@ -1,0 +1,13 @@
+{
+  "id": "battleship",
+  "title": "海战棋",
+  "shortTitle": "海战",
+  "description": "布置舰队搜索敌方海域，先击沉全部战舰者胜。",
+  "category": "益智",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/battleship/",
+  "enabled": true
+}
