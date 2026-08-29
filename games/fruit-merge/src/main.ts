@@ -53,6 +53,7 @@ class FruitMergeScene extends Phaser.Scene {
   private nextPreview!: Phaser.GameObjects.Image;
   private chainText!: Phaser.GameObjects.Text;
   private fruits: Fruit[] = [];
+  private pendingMerges: Array<{ a: Fruit; b: Fruit }> = [];
   private aimX = CENTER_X;
   private currentTier = 0;
   private nextTier = 1;
@@ -106,10 +107,12 @@ class FruitMergeScene extends Phaser.Scene {
     this.buildHudPreviews();
     this.bindInput();
     this.matter.world.on("collisionstart", this.handleCollisions);
+    this.matter.world.on("collisionactive", this.handleCollisions);
     bindGameLifecycle(this, { onInterrupt: () => this.audio.suspend() });
     this.events.on(Phaser.Scenes.Events.RESUME, () => this.audio.resume());
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       this.matter.world.off("collisionstart", this.handleCollisions);
+      this.matter.world.off("collisionactive", this.handleCollisions);
       this.audio.suspend();
     });
     sharpenSceneText(this.children, RENDER_DPR);
@@ -118,6 +121,7 @@ class FruitMergeScene extends Phaser.Scene {
 
   private resetRun() {
     this.fruits = [];
+    this.pendingMerges = [];
     this.aimX = CENTER_X;
     this.currentTier = 0;
     this.nextTier = 1;
@@ -238,6 +242,8 @@ class FruitMergeScene extends Phaser.Scene {
     return fruit;
   }
 
+  /** Queued from collision events; merging inside the callback would mutate
+   *  the world while Matter is still resolving the step. */
   private handleCollisions = (event: {
     pairs: Array<{ bodyA: { gameObject?: Phaser.GameObjects.GameObject }; bodyB: { gameObject?: Phaser.GameObjects.GameObject } }>;
   }) => {
@@ -247,9 +253,17 @@ class FruitMergeScene extends Phaser.Scene {
       const b = pair.bodyB.gameObject?.getData("fruit") as Fruit | undefined;
       if (!a || !b || a === b) continue;
       if (a.merging || b.merging || a.tier !== b.tier) continue;
-      this.mergePair(a, b);
+      a.merging = true;
+      b.merging = true;
+      this.pendingMerges.push({ a, b });
     }
   };
+
+  private processMerges() {
+    if (this.pendingMerges.length === 0 || this.ended) return;
+    const merges = this.pendingMerges.splice(0);
+    for (const { a, b } of merges) this.mergePair(a, b);
+  }
 
   private mergePair(a: Fruit, b: Fruit) {
     a.merging = true;
@@ -290,6 +304,7 @@ class FruitMergeScene extends Phaser.Scene {
     }
 
     if (this.chain >= 2) {
+      this.tweens.killTweensOf(this.chainText);
       this.chainText.setText(`连锁 ×${this.chain}！`);
       this.chainText.setAlpha(1).setScale(1.3);
       this.tweens.add({ targets: this.chainText, scale: 1, duration: 180, ease: "Cubic.easeOut" });
@@ -361,6 +376,8 @@ class FruitMergeScene extends Phaser.Scene {
   }
 
   update(time: number, delta: number) {
+    if (this.ended) return;
+    this.processMerges();
     if (this.ended) return;
     this.currentPreview.setPosition(this.aimX, SPAWN_Y);
     this.aimGraphics.clear();
