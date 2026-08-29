@@ -1,0 +1,13 @@
+{
+  "id": "penalty-kick",
+  "title": "点球大战",
+  "shortTitle": "点球",
+  "description": "瞄准射门与飞身扑救轮换对决，点球大战一决胜负。",
+  "category": "休闲",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/penalty-kick/",
+  "enabled": true
+}

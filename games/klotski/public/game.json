@@ -1,0 +1,13 @@
+{
+  "id": "klotski",
+  "title": "华容道",
+  "shortTitle": "滑块",
+  "description": "经典滑块布局，挪开兵将让曹操从下方出口逃出。",
+  "category": "益智",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/klotski/",
+  "enabled": true
+}

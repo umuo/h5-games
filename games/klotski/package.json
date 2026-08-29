@@ -1,0 +1,19 @@
+{
+  "name": "@web-games/game-klotski",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "npm run build:asm && vite build",
+    "typecheck": "tsc --noEmit",
+    "build:asm": "asc assembly/klotski.ts -O3 --runtime minimal --initialMemory 128 --outFile src/solver.wasm"
+  },
+  "dependencies": {
+    "@web-games/game-sdk": "*",
+    "phaser": "3.90.0"
+  },
+  "devDependencies": {
+    "assemblyscript": "^0.28.20"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "mini-billiards",
+  "title": "桌上台球",
+  "shortTitle": "台球",
+  "description": "拖动球杆瞄准出杆，用最少的杆数清空所有彩球。",
+  "category": "街机",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/mini-billiards/",
+  "enabled": true
+}

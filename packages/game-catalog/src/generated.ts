@@ -276,6 +276,19 @@ export const games: GameCatalogItem[] = [
     "enabled": true
   },
   {
+    "id": "klotski",
+    "title": "华容道",
+    "shortTitle": "滑块",
+    "description": "经典滑块布局，挪开兵将让曹操从下方出口逃出。",
+    "category": "益智",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/klotski/",
+    "enabled": true
+  },
+  {
     "id": "lights-out",
     "title": "熄灯挑战",
     "shortTitle": "熄灯",
@@ -393,6 +406,19 @@ export const games: GameCatalogItem[] = [
     "enabled": true
   },
   {
+    "id": "mini-billiards",
+    "title": "桌上台球",
+    "shortTitle": "台球",
+    "description": "拖动球杆瞄准出杆，用最少的杆数清空所有彩球。",
+    "category": "街机",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/mini-billiards/",
+    "enabled": true
+  },
+  {
     "id": "mini-golf",
     "title": "迷你高尔夫",
     "shortTitle": "高尔夫",
@@ -468,6 +494,19 @@ export const games: GameCatalogItem[] = [
     "orientation": "portrait",
     "version": "1.0.0",
     "path": "/games/peg-solitaire/",
+    "enabled": true
+  },
+  {
+    "id": "penalty-kick",
+    "title": "点球大战",
+    "shortTitle": "点球",
+    "description": "瞄准射门与飞身扑救轮换对决，点球大战一决胜负。",
+    "category": "休闲",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/penalty-kick/",
     "enabled": true
   },
   {
