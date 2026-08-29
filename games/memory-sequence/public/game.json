@@ -1,0 +1,13 @@
+{
+  "id": "memory-sequence",
+  "title": "记忆序列",
+  "shortTitle": "序列",
+  "description": "记住灯亮的顺序并复现，每多一级序列就更长。",
+  "category": "反应力",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/memory-sequence/",
+  "enabled": true
+}

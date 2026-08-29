@@ -1,0 +1,13 @@
+{
+  "id": "frog-cross",
+  "title": "青蛙过河",
+  "shortTitle": "青蛙",
+  "description": "躲开车流、踏上浮木，把青蛙安全送到对岸的荷叶上。",
+  "category": "动作",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/frog-cross/",
+  "enabled": true
+}

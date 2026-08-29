@@ -55,6 +55,19 @@ export const games: GameCatalogItem[] = [
     "enabled": true
   },
   {
+    "id": "frog-cross",
+    "title": "青蛙过河",
+    "shortTitle": "青蛙",
+    "description": "躲开车流、踏上浮木，把青蛙安全送到对岸的荷叶上。",
+    "category": "动作",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/frog-cross/",
+    "enabled": true
+  },
+  {
     "id": "fruit-merge",
     "title": "合成果实",
     "shortTitle": "果实",
@@ -117,6 +130,19 @@ export const games: GameCatalogItem[] = [
     "orientation": "portrait",
     "version": "1.2.0",
     "path": "/games/memory-match/",
+    "enabled": true
+  },
+  {
+    "id": "memory-sequence",
+    "title": "记忆序列",
+    "shortTitle": "序列",
+    "description": "记住灯亮的顺序并复现，每多一级序列就更长。",
+    "category": "反应力",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/memory-sequence/",
     "enabled": true
   },
   {
@@ -208,6 +234,19 @@ export const games: GameCatalogItem[] = [
     "orientation": "portrait",
     "version": "1.2.0",
     "path": "/games/pulse/",
+    "enabled": true
+  },
+  {
+    "id": "sky-hop",
+    "title": "云端跳跳",
+    "shortTitle": "云端",
+    "description": "左右拖动小云朵在平台上弹跳，小心碎裂与移动的板子。",
+    "category": "街机",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/sky-hop/",
     "enabled": true
   },
   {

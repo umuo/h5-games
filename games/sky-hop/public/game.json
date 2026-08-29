@@ -1,0 +1,13 @@
+{
+  "id": "sky-hop",
+  "title": "云端跳跳",
+  "shortTitle": "云端",
+  "description": "左右拖动小云朵在平台上弹跳，小心碎裂与移动的板子。",
+  "category": "街机",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/sky-hop/",
+  "enabled": true
+}
