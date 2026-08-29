@@ -1,0 +1,13 @@
+{
+  "id": "one-stroke",
+  "title": "一笔画",
+  "shortTitle": "一笔",
+  "description": "一笔画过所有格子不能回头，水墨风格的路径谜题。",
+  "category": "益智",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/one-stroke/",
+  "enabled": true
+}

@@ -1,0 +1,13 @@
+{
+  "id": "hold-jump",
+  "title": "跳一跳",
+  "shortTitle": "跳一跳",
+  "description": "按住蓄力松手起跳，落在中心拿连击加成，看你能跳多远。",
+  "category": "休闲",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/hold-jump/",
+  "enabled": true
+}

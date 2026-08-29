@@ -1,0 +1,13 @@
+{
+  "id": "block-fall",
+  "title": "方块倾落",
+  "shortTitle": "方块",
+  "description": "经典倾落方块：旋转、移动、消行，手势加按钮双操作。",
+  "category": "益智",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/block-fall/",
+  "enabled": true
+}

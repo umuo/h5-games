@@ -16,6 +16,19 @@ export const games: GameCatalogItem[] = [
     "enabled": true
   },
   {
+    "id": "block-fall",
+    "title": "方块倾落",
+    "shortTitle": "方块",
+    "description": "经典倾落方块：旋转、移动、消行，手势加按钮双操作。",
+    "category": "益智",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/block-fall/",
+    "enabled": true
+  },
+  {
     "id": "breakout",
     "title": "打砖块",
     "shortTitle": "BRICK",
@@ -52,6 +65,19 @@ export const games: GameCatalogItem[] = [
     "orientation": "portrait",
     "version": "1.0.0",
     "path": "/games/fruit-merge/",
+    "enabled": true
+  },
+  {
+    "id": "hold-jump",
+    "title": "跳一跳",
+    "shortTitle": "跳一跳",
+    "description": "按住蓄力松手起跳，落在中心拿连击加成，看你能跳多远。",
+    "category": "休闲",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/hold-jump/",
     "enabled": true
   },
   {
@@ -117,6 +143,19 @@ export const games: GameCatalogItem[] = [
     "orientation": "portrait",
     "version": "1.0.0",
     "path": "/games/neon-raid/",
+    "enabled": true
+  },
+  {
+    "id": "one-stroke",
+    "title": "一笔画",
+    "shortTitle": "一笔",
+    "description": "一笔画过所有格子不能回头，水墨风格的路径谜题。",
+    "category": "益智",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/one-stroke/",
     "enabled": true
   },
   {
