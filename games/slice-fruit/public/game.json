@@ -1,0 +1,13 @@
+{
+  "id": "slice-fruit",
+  "title": "切水果",
+  "shortTitle": "切瓜",
+  "description": "划屏切开抛起的西瓜橙子，小心别碰到炸弹。",
+  "category": "休闲",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/slice-fruit/",
+  "enabled": true
+}

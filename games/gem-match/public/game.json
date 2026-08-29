@@ -1,0 +1,13 @@
+{
+  "id": "gem-match",
+  "title": "宝石消消",
+  "shortTitle": "宝石",
+  "description": "交换相邻宝石凑成三连，触发连锁消除冲击高分。",
+  "category": "休闲",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/gem-match/",
+  "enabled": true
+}

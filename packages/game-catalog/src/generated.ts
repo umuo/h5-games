@@ -68,6 +68,19 @@ export const games: GameCatalogItem[] = [
     "enabled": true
   },
   {
+    "id": "gem-match",
+    "title": "宝石消消",
+    "shortTitle": "宝石",
+    "description": "交换相邻宝石凑成三连，触发连锁消除冲击高分。",
+    "category": "休闲",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/gem-match/",
+    "enabled": true
+  },
+  {
     "id": "hold-jump",
     "title": "跳一跳",
     "shortTitle": "跳一跳",
@@ -172,6 +185,19 @@ export const games: GameCatalogItem[] = [
     "enabled": true
   },
   {
+    "id": "pipe-connect",
+    "title": "管道连接",
+    "shortTitle": "管道",
+    "description": "点击旋转水管，把源头的水引到每一根出口管道。",
+    "category": "益智",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/pipe-connect/",
+    "enabled": true
+  },
+  {
     "id": "pulse",
     "title": "光脉：节拍反应",
     "shortTitle": "PULSE",
@@ -182,6 +208,19 @@ export const games: GameCatalogItem[] = [
     "orientation": "portrait",
     "version": "1.2.0",
     "path": "/games/pulse/",
+    "enabled": true
+  },
+  {
+    "id": "slice-fruit",
+    "title": "切水果",
+    "shortTitle": "切瓜",
+    "description": "划屏切开抛起的西瓜橙子，小心别碰到炸弹。",
+    "category": "休闲",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/slice-fruit/",
     "enabled": true
   },
   {

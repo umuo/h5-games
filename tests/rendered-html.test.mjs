@@ -35,6 +35,9 @@ test("server-renders the game portal", async () => {
   assert.match(html, /跳一跳/);
   assert.match(html, /方块倾落/);
   assert.match(html, /一笔画/);
+  assert.match(html, /管道连接/);
+  assert.match(html, /切水果/);
+  assert.match(html, /宝石消消/);
   assert.match(html, /\/games\/pulse\//);
   assert.match(html, /\/games\/catch-the-cat\//);
   assert.match(html, /\/games\/merge-2048\//);
@@ -46,10 +49,12 @@ test("server-renders the game portal", async () => {
   assert.match(html, /\/games\/hold-jump\//);
   assert.match(html, /\/games\/block-fall\//);
   assert.match(html, /\/games\/one-stroke\//);
+  assert.match(html, /\/games\/pipe-connect\//);
+  assert.match(html, /\/games\/slice-fruit\//);
+  assert.match(html, /\/games\/gem-match\//);
   assert.match(html, /\/play\/cloud-match/);
   assert.match(html, /game-icon-cat/);
   assert.match(html, /game-icon-connect/);
-  assert.match(html, /game-icon-memory/);
   assert.match(html, /game-icon-arcade/);
   assert.match(html, /游戏分类/);
   assert.match(html, /全部/);

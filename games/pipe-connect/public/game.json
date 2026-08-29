@@ -1,0 +1,13 @@
+{
+  "id": "pipe-connect",
+  "title": "管道连接",
+  "shortTitle": "管道",
+  "description": "点击旋转水管，把源头的水引到每一根出口管道。",
+  "category": "益智",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/pipe-connect/",
+  "enabled": true
+}
