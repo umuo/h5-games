@@ -131,9 +131,6 @@ class TwentyFourScene extends Phaser.Scene {
     this.statusText = this.add.text(CENTER_X, 286, "", {
       fontFamily: "sans-serif", fontSize: "14px", color: "#ff6a51", fontStyle: "bold",
     }).setOrigin(.5);
-    const solvedText = this.add.text(CENTER_X, 700, "", {
-      fontFamily: "monospace", fontSize: "11px", color: "#8f918a", letterSpacing: 1,
-    }).setOrigin(.5).setName("solved-text");
 
     this.buildOperators();
     bindGameLifecycle(this, { onInterrupt: () => this.audio.suspend() });
