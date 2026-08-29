@@ -1,0 +1,13 @@
+{
+  "id": "merge-2048",
+  "title": "2048",
+  "shortTitle": "2048",
+  "description": "滑动棋盘合并相同数字，冲击 2048。",
+  "category": "益智",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/merge-2048/",
+  "enabled": true
+}

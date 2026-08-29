@@ -1,0 +1,13 @@
+{
+  "id": "breakout",
+  "title": "打砖块",
+  "shortTitle": "BRICK",
+  "description": "拖动挡板反弹小球，击碎全部砖块闯过更多关卡。",
+  "category": "街机",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/breakout/",
+  "enabled": true
+}

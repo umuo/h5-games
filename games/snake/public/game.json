@@ -1,0 +1,13 @@
+{
+  "id": "snake",
+  "title": "贪吃蛇",
+  "shortTitle": "SNAKE",
+  "description": "滑动控制方向，吃掉光点食物，看看能长到多长。",
+  "category": "街机",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/snake/",
+  "enabled": true
+}
