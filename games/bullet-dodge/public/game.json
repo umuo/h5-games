@@ -1,0 +1,13 @@
+{
+  "id": "bullet-dodge",
+  "title": "弹幕躲避",
+  "shortTitle": "弹幕",
+  "description": "拖动小机甲在弹雨中穿行，活得越久分越高。",
+  "category": "反应力",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/bullet-dodge/",
+  "enabled": true
+}

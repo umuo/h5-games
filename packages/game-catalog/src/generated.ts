@@ -68,6 +68,19 @@ export const games: GameCatalogItem[] = [
     "enabled": true
   },
   {
+    "id": "bullet-dodge",
+    "title": "弹幕躲避",
+    "shortTitle": "弹幕",
+    "description": "拖动小机甲在弹雨中穿行，活得越久分越高。",
+    "category": "反应力",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/bullet-dodge/",
+    "enabled": true
+  },
+  {
     "id": "catch-the-cat",
     "title": "围住小猫",
     "shortTitle": "CAT",
@@ -172,6 +185,19 @@ export const games: GameCatalogItem[] = [
     "enabled": true
   },
   {
+    "id": "lunar-lander",
+    "title": "着陆器",
+    "shortTitle": "着陆",
+    "description": "控制推力对抗重力，平稳降落在指定平台上。",
+    "category": "街机",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/lunar-lander/",
+    "enabled": true
+  },
+  {
     "id": "maze-run",
     "title": "迷宫寻宝",
     "shortTitle": "迷宫",
@@ -273,6 +299,19 @@ export const games: GameCatalogItem[] = [
     "orientation": "portrait",
     "version": "1.0.0",
     "path": "/games/one-stroke/",
+    "enabled": true
+  },
+  {
+    "id": "peg-solitaire",
+    "title": "孔明棋",
+    "shortTitle": "孔明",
+    "description": "跳过相邻棋子将其移除，只剩一颗棋子居中即完美。",
+    "category": "益智",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/peg-solitaire/",
     "enabled": true
   },
   {

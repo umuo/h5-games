@@ -1,0 +1,13 @@
+{
+  "id": "peg-solitaire",
+  "title": "孔明棋",
+  "shortTitle": "孔明",
+  "description": "跳过相邻棋子将其移除，只剩一颗棋子居中即完美。",
+  "category": "益智",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/peg-solitaire/",
+  "enabled": true
+}
