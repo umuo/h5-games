@@ -1,0 +1,13 @@
+{
+  "id": "stack-tower",
+  "title": "堆塔",
+  "shortTitle": "堆塔",
+  "description": "看准时机放下层层方块，切掉悬空的部分，把塔堆得更高。",
+  "category": "街机",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/stack-tower/",
+  "enabled": true
+}

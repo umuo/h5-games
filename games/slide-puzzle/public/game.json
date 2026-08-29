@@ -1,0 +1,13 @@
+{
+  "id": "slide-puzzle",
+  "title": "数字华容道",
+  "shortTitle": "华容道",
+  "description": "滑动数字方块恢复顺序，从三阶一路挑战到五阶。",
+  "category": "益智",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/slide-puzzle/",
+  "enabled": true
+}

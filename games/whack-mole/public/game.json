@@ -1,0 +1,13 @@
+{
+  "id": "whack-mole",
+  "title": "打地鼠",
+  "shortTitle": "地鼠",
+  "description": "地鼠冒头就锤，金地鼠加分炸弹扣命，45 秒极限挑战。",
+  "category": "休闲",
+  "icon": "arcade",
+  "engine": "phaser",
+  "orientation": "portrait",
+  "version": "1.0.0",
+  "path": "/games/whack-mole/",
+  "enabled": true
+}

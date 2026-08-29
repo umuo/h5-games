@@ -224,6 +224,19 @@ export const games: GameCatalogItem[] = [
     "enabled": true
   },
   {
+    "id": "slide-puzzle",
+    "title": "数字华容道",
+    "shortTitle": "华容道",
+    "description": "滑动数字方块恢复顺序，从三阶一路挑战到五阶。",
+    "category": "益智",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/slide-puzzle/",
+    "enabled": true
+  },
+  {
     "id": "snake",
     "title": "贪吃蛇",
     "shortTitle": "SNAKE",
@@ -250,6 +263,19 @@ export const games: GameCatalogItem[] = [
     "enabled": true
   },
   {
+    "id": "stack-tower",
+    "title": "堆塔",
+    "shortTitle": "堆塔",
+    "description": "看准时机放下层层方块，切掉悬空的部分，把塔堆得更高。",
+    "category": "街机",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/stack-tower/",
+    "enabled": true
+  },
+  {
     "id": "thunder-strike",
     "title": "雷电射击",
     "shortTitle": "雷电",
@@ -273,6 +299,19 @@ export const games: GameCatalogItem[] = [
     "orientation": "portrait",
     "version": "1.1.1",
     "path": "/games/water-sort/",
+    "enabled": true
+  },
+  {
+    "id": "whack-mole",
+    "title": "打地鼠",
+    "shortTitle": "地鼠",
+    "description": "地鼠冒头就锤，金地鼠加分炸弹扣命，45 秒极限挑战。",
+    "category": "休闲",
+    "icon": "arcade",
+    "engine": "phaser",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "path": "/games/whack-mole/",
     "enabled": true
   },
   {
