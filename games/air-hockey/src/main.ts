@@ -22,6 +22,7 @@ const GOAL_HALF = 64;
 const PUCK_RADIUS = 13;
 const MALLET_RADIUS = 21;
 const WIN_SCORE = 7;
+const MAX_SPEED = 780;
 
 class AirHockeyScene extends Phaser.Scene {
   private playerScoreText!: Phaser.GameObjects.Text;
@@ -38,6 +39,14 @@ class AirHockeyScene extends Phaser.Scene {
   private aiX = CENTER_X;
   private aiY = TABLE_Y + 90;
   private resetAt = 0;
+  private playerPrevX = 0;
+  private playerPrevY = 0;
+  private aiPrevX = 0;
+  private aiPrevY = 0;
+  private lastTouchAt = 0;
+  private stallClock = 0;
+  private stallX = 0;
+  private stallY = 0;
   private celebrating = false;
   private started = false;
   private ended = false;
@@ -57,6 +66,14 @@ class AirHockeyScene extends Phaser.Scene {
     this.celebrating = false;
     this.started = false;
     this.ended = false;
+    this.playerPrevX = this.playerX;
+    this.playerPrevY = this.playerY;
+    this.aiPrevX = this.aiX;
+    this.aiPrevY = this.aiY;
+    this.lastTouchAt = 0;
+    this.stallClock = 0;
+    this.stallX = CENTER_X;
+    this.stallY = TABLE_Y + TABLE_H / 2;
 
     configureHiDpiCamera(this.cameras.main, WIDTH, HEIGHT, RENDER_DPR);
     this.cameras.main.setBackgroundColor("#101114");
@@ -121,6 +138,10 @@ class AirHockeyScene extends Phaser.Scene {
     this.puckVX = 0;
     this.puckVY = towardPlayer ? 260 : -260;
     this.resetAt = this.time.now + 700;
+    this.lastTouchAt = this.time.now;
+    this.stallClock = 0;
+    this.stallX = CENTER_X;
+    this.stallY = TABLE_Y + TABLE_H / 2;
   }
 
   private bindInput() {
@@ -143,16 +164,46 @@ class AirHockeyScene extends Phaser.Scene {
     });
   }
 
-  private collideMallet(malletX: number, malletY: number, isPlayer: boolean) {
+  private collideMallet(malletX: number, malletY: number, malletVX: number, malletVY: number, isPlayer: boolean) {
     const distance = Phaser.Math.Distance.Between(this.puck.x, this.puck.y, malletX, malletY);
-    if (distance > PUCK_RADIUS + MALLET_RADIUS) return;
+    if (distance >= PUCK_RADIUS + MALLET_RADIUS) return;
     const angle = Phaser.Math.Angle.Between(malletX, malletY, this.puck.x, this.puck.y);
+    const nx = Math.cos(angle);
+    const ny = Math.sin(angle);
     const overlap = PUCK_RADIUS + MALLET_RADIUS - distance;
-    this.puck.x += Math.cos(angle) * overlap;
-    this.puck.y += Math.sin(angle) * overlap;
-    const speed = isPlayer ? 520 : 420;
-    this.puckVX = Math.cos(angle) * speed;
-    this.puckVY = Math.sin(angle) * speed;
+    this.puck.x += nx * overlap;
+    this.puck.y += ny * overlap;
+
+    // treat the mallet as a moving body: reflect the closing speed, keep tangential drift
+    const relVX = this.puckVX - malletVX;
+    const relVY = this.puckVY - malletVY;
+    const approach = relVX * nx + relVY * ny;
+    let outVX = this.puckVX;
+    let outVY = this.puckVY;
+    if (approach < 0) {
+      outVX = malletVX + relVX - 2 * approach * nx;
+      outVY = malletVY + relVY - 2 * approach * ny;
+    }
+
+    if (!isPlayer && ny > .5) {
+      // AI striking downward: aim for the goal mouth away from the player's mallet
+      const aimX = CENTER_X + (this.playerX <= CENTER_X ? 1 : -1) * GOAL_HALF * .82;
+      const shot = Phaser.Math.Angle.Between(this.puck.x, this.puck.y, aimX, TABLE_Y + TABLE_H + 10);
+      const power = Phaser.Math.Clamp(Math.hypot(outVX, outVY), 400, 640);
+      outVX = Math.cos(shot) * power;
+      outVY = Math.sin(shot) * power;
+    }
+
+    // scatter every hit slightly so perfectly symmetric rallies can't loop forever
+    const speed = Math.hypot(outVX, outVY);
+    if (speed <= 0) return;
+    const jitter = Phaser.Math.FloatBetween(-.05, .05);
+    const cosJ = Math.cos(jitter);
+    const sinJ = Math.sin(jitter);
+    const scale = Math.min(speed, MAX_SPEED) / speed;
+    this.puckVX = (outVX * cosJ - outVY * sinJ) * scale;
+    this.puckVY = (outVX * sinJ + outVY * cosJ) * scale;
+    this.lastTouchAt = this.time.now;
     this.audio.tone({ freq: isPlayer ? 300 : 260, duration: .05, type: "square", gain: .1 });
   }
 
@@ -203,26 +254,66 @@ class AirHockeyScene extends Phaser.Scene {
   update(_time: number, delta: number) {
     if (this.ended) return;
     const seconds = Math.min(delta, 40) / 1000;
+    const now = this.time.now;
+
+    const playerVX = seconds > 0 ? (this.playerX - this.playerPrevX) / seconds : 0;
+    const playerVY = seconds > 0 ? (this.playerY - this.playerPrevY) / seconds : 0;
+    const aiVX = seconds > 0 ? (this.aiX - this.aiPrevX) / seconds : 0;
+    const aiVY = seconds > 0 ? (this.aiY - this.aiPrevY) / seconds : 0;
+    this.playerPrevX = this.playerX;
+    this.playerPrevY = this.playerY;
+    this.aiPrevX = this.aiX;
+    this.aiPrevY = this.aiY;
 
     this.playerMallet.setPosition(this.playerX, this.playerY);
-
-    const aiTargetX = this.puck.y < TABLE_Y + TABLE_H / 2
-      ? Phaser.Math.Clamp(this.puck.x, TABLE_X + MALLET_RADIUS, TABLE_X + TABLE_W - MALLET_RADIUS)
-      : CENTER_X;
-    const aiTargetY = this.puck.y < TABLE_Y + TABLE_H / 2
-      ? Phaser.Math.Clamp(this.puck.y - 6, TABLE_Y + MALLET_RADIUS, TABLE_Y + TABLE_H / 2 - MALLET_RADIUS)
-      : TABLE_Y + 90;
-    this.aiX = Phaser.Math.Linear(this.aiX, aiTargetX, Math.min(1, seconds * (3.2 + this.playerScore * .12)));
-    this.aiY = Phaser.Math.Linear(this.aiY, aiTargetY, Math.min(1, seconds * 4));
+    this.updateAi(seconds);
     this.aiMallet.setPosition(this.aiX, this.aiY);
 
-    if (this.time.now < this.resetAt) return;
+    if (now < this.resetAt) return;
 
-    this.puck.x += this.puckVX * seconds;
-    this.puck.y += this.puckVY * seconds;
     this.puckVX *= .997;
     this.puckVY *= .997;
+    const speed = Math.hypot(this.puckVX, this.puckVY);
+    const steps = Math.min(4, Math.max(1, Math.ceil((speed * seconds) / 11)));
+    for (let i = 0; i < steps; i++) {
+      this.puck.x += this.puckVX * (seconds / steps);
+      this.puck.y += this.puckVY * (seconds / steps);
+      if (this.puckEnvironment()) break;
+      this.collideMallet(this.playerX, this.playerY, playerVX, playerVY, true);
+      this.collideMallet(this.aiX, this.aiY, aiVX, aiVY, false);
+    }
+    if (this.ended) return;
 
+    this.watchdog(now, seconds);
+  }
+
+  private updateAi(seconds: number) {
+    const HALF_Y = TABLE_Y + TABLE_H / 2;
+    const ramp = 3.2 + this.playerScore * .12;
+    let targetX = CENTER_X + (this.puck.x - CENTER_X) * .5;
+    let targetY = TABLE_Y + 92;
+    let speed = ramp;
+    const glued = this.puck.y < TABLE_Y + 34;
+    if (this.puck.y < HALF_Y && !glued) {
+      if (this.aiY < this.puck.y - 12 && Math.abs(this.aiX - this.puck.x) < 16) {
+        // lined up over the puck: drive down through it
+        targetX = this.puck.x;
+        targetY = Math.min(HALF_Y - MALLET_RADIUS, this.puck.y + 46);
+        speed = ramp * 2.2;
+      } else if (this.aiY < this.puck.y + 6) {
+        targetX = this.puck.x;
+        targetY = Math.max(TABLE_Y + MALLET_RADIUS, this.puck.y - (MALLET_RADIUS + PUCK_RADIUS + 12));
+      } else {
+        // below the puck: swing wide first instead of climbing straight into it
+        targetX = this.puck.x + (this.aiX <= this.puck.x ? -1 : 1) * 58;
+        targetY = Math.max(TABLE_Y + MALLET_RADIUS, this.puck.y - 54);
+      }
+    }
+    this.aiX = Phaser.Math.Linear(this.aiX, targetX, Math.min(1, seconds * speed));
+    this.aiY = Phaser.Math.Linear(this.aiY, targetY, Math.min(1, seconds * speed * 1.2));
+  }
+
+  private puckEnvironment(): boolean {
     if (this.puck.x < TABLE_X + PUCK_RADIUS) {
       this.puck.x = TABLE_X + PUCK_RADIUS;
       this.puckVX = Math.abs(this.puckVX);
@@ -237,11 +328,11 @@ class AirHockeyScene extends Phaser.Scene {
     if (inGoalBandX) {
       if (this.puck.y < TABLE_Y - 12) {
         this.scoreGoal(true);
-        return;
+        return true;
       }
       if (this.puck.y > TABLE_Y + TABLE_H + 12) {
         this.scoreGoal(false);
-        return;
+        return true;
       }
     } else {
       if (this.puck.y < TABLE_Y + PUCK_RADIUS) {
@@ -255,9 +346,38 @@ class AirHockeyScene extends Phaser.Scene {
         this.audio.tone({ freq: 420, duration: .04, type: "square", gain: .07 });
       }
     }
+    return false;
+  }
 
-    this.collideMallet(this.playerX, this.playerY, true);
-    this.collideMallet(this.aiX, this.aiY, false);
+  private watchdog(now: number, seconds: number) {
+    this.stallClock += seconds;
+    if (this.stallClock >= .4) {
+      const moved = Phaser.Math.Distance.Between(this.puck.x, this.puck.y, this.stallX, this.stallY);
+      if (moved < 8 && now - this.lastTouchAt > 900 && this.puck.y < TABLE_Y + TABLE_H / 2) {
+        this.unstickPuck(now);
+      }
+      this.stallClock = 0;
+      this.stallX = this.puck.x;
+      this.stallY = this.puck.y;
+    }
+    if (now - this.lastTouchAt > 6000) {
+      const speed = Math.hypot(this.puckVX, this.puckVY);
+      if (speed > 30 || this.puck.y < TABLE_Y + TABLE_H / 2) {
+        // nobody reached the puck for a long while: steer it back toward the middle
+        this.puckVX += (this.puck.x < CENTER_X ? 1 : -1) * 170;
+        this.puckVY = Math.max(this.puckVY, 80);
+        this.lastTouchAt = now;
+      }
+    }
+  }
+
+  private unstickPuck(now: number) {
+    const aimX = CENTER_X + Phaser.Math.FloatBetween(-70, 70);
+    const angle = Phaser.Math.Angle.Between(this.puck.x, this.puck.y, aimX, TABLE_Y + TABLE_H * .7);
+    this.puckVX = Math.cos(angle) * 430;
+    this.puckVY = Math.sin(angle) * 430;
+    this.lastTouchAt = now;
+    this.audio.tone({ freq: 520, duration: .06, type: "triangle", gain: .06 });
   }
 }
 
